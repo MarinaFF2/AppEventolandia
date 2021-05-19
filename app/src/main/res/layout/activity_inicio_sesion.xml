@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InicioSesionActivity">
+
+    <include android:id="@+id/toolbar_main"
+        layout="@layout/toolbar_main"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="25dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_inicioSesion"
+                android:textStyle="bold"
+                android:textSize="@dimen/sizeTitle"
+                android:gravity="center_horizontal"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textView_correo_inicioSesion"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                />
+            <EditText
+                android:id="@+id/editView_correo_inicioSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/editView_correo_inicioSesion"
+                android:layout_marginTop="20dp"
+                android:inputType="textEmailAddress"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textView_pwd_inicioSesion"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                />
+            <EditText
+                android:id="@+id/editView_pwd_inicioSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/editView_pwd_inicioSesion"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword"
+                />
+            <Button
+                android:id="@+id/button_inicioSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_inicioSesion"
+                android:textSize="20dp"
+                android:layout_marginTop="20dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
