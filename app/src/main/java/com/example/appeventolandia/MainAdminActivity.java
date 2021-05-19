@@ -30,7 +30,6 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         setContentView(R.layout.activity_main_admin);
 
         addUserSesion();//recogemos la userSesion
-        addDate();
         addMenu(); //añadimos menu
         addFragment();//añadimos fragment
         addNavigationView(); // añadimos navigation view
@@ -40,22 +39,6 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
 
-
-    private void addDate() {
-        //hacemos la conexión con la BBDD
-        connection = new ConexionBBDD(this,"bd_events",null,2);
-
-        //comprobamos si hay usuarios en la BBDD,
-        //sino lanxzamos los insert para insertar usuarios para iniciar la app con datos
-       // if(connection.listUsers()==null){
-            Usuario.insertUsuarioIniciales(this);
-       // }
-        //comprobamos si hay eventos en la BBDD,
-        //sino lanxzamos los insert para insertar eventos para iniciar la app con datos
-        //if(connection.listEvents()==null){
-        //    Evento.insertEventoIniciales(this);
-        //}
-    }
     private void addNavigationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

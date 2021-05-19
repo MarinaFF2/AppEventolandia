@@ -22,7 +22,7 @@ public class PerfilFragment extends Fragment {
     private EditText edit_email_perfil;
     private EditText edit_pwd_perfil;
     private Button button_save_perfil;
-    private Usuario userSesion = null;
+    private Usuario userSesion;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -34,18 +34,17 @@ public class PerfilFragment extends Fragment {
         edit_pwd_perfil = (EditText) view.findViewById(R.id.edit_pwd_perfil);
         button_save_perfil = (Button) view.findViewById(R.id.button_save_perfil);
 
+        //recogemos la userSesion
+        addUserSesion();
         //añadimos el circulo a la foto de perfil
         addCircularImageView();
         //añadimos datos del usuario
         addDataPerfil();
         //añadimos la opción del evento
         eventButtonSave();
-        //recogemos la userSesion
-        addUserSesion();
     }
     private void addUserSesion(){
         //recogemos la cookie del usuario
-        userSesion = null;
         Bundle data = this.getArguments();
         if(data != null){
             userSesion = (Usuario) data.getSerializable("userSesion");
@@ -88,18 +87,18 @@ public class PerfilFragment extends Fragment {
         circularImageView.setCircleColor(Color.WHITE);
 
         // Set Border
-        circularImageView.setBorderWidth(50f);
+        circularImageView.setBorderWidth(5f);
         circularImageView.setBorderColor(Color.BLACK);
         // or with gradient
         circularImageView.setBorderColorStart(Color.BLACK);
-        circularImageView.setBorderColorEnd(Color.RED);
+        circularImageView.setBorderColorEnd(Color.GREEN);
         circularImageView.setBorderColorDirection(CircularImageView.GradientDirection.TOP_TO_BOTTOM);
 
         // Add Shadow with default param
         circularImageView.setShadowEnable(true);
         // or with custom param
-        circularImageView.setShadowRadius(7f);
-        circularImageView.setShadowColor(Color.RED);
+        circularImageView.setShadowRadius(3f);
+        circularImageView.setShadowColor(Color.GREEN);
         circularImageView.setShadowGravity(CircularImageView.ShadowGravity.CENTER);
     }
 }

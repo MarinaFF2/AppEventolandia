@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -14,9 +16,10 @@ import com.example.appeventolandia.entidades.Usuario;
 import java.util.ArrayList;
 
 public class VisualizarEventFragment extends Fragment {
-    private Usuario userSesion = null;
+    private Usuario userSesion;
     private ConexionBBDD connection;
     private ArrayList<Evento> listEvents;
+    private CalendarView calendario;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,19 +30,22 @@ public class VisualizarEventFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        addUserSesion();//recogemos la userSesion
-        addData();//cargamos los eventos que organiza
         //hacemos la conexión con la BBDD
         connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
+        //declaramos el calendario
+        calendario = (CalendarView) view.findViewById(R.id.calendarView_VisualizarEventFragment);
+
+        addUserSesion();//recogemos la userSesion
+        addData();//cargamos los eventos que organiza
     }
 
     private void addData() {
+        int id = userSesion.getId();
         //recogemos los eventos del cliente
-        listEvents = connection.listEventsByCliente(userSesion.getId());
+        listEvents = connection.listEventsByCliente(id);
     }
     private void addUserSesion(){
         //recogemos la cookie del usuario
-        userSesion = null;
         Bundle data = this.getArguments();
         if(data != null){
             userSesion = (Usuario) data.getSerializable("userSesion");

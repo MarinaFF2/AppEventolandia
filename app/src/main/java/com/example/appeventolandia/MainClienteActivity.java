@@ -33,7 +33,7 @@ public class MainClienteActivity extends AppCompatActivity implements Navigation
     }
 
     private void addUserSession() {
-        //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
     private void addNavigationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -84,7 +84,7 @@ public class MainClienteActivity extends AppCompatActivity implements Navigation
             fragmentTransaction.replace(R.id.content_fragment,fragment);
             //pasamos el usuario de la sesion
             Bundle data = new Bundle();
-          //  data.putSerializable("userSesion",userSesion);
+            data.putSerializable("userSesion",userSesion);
             fragment.setArguments(data);
 
             fragmentTransaction.commit();

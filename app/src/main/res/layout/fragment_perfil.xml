@@ -25,6 +25,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
+        android:layout_marginTop="16dp"
         android:src="@drawable/user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,20 +35,22 @@
         android:id="@+id/campo_name_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:text="@string/text_name_perfil"
         android:textSize="@dimen/sizeCampos"
         app:layout_constraintEnd_toStartOf="@+id/edit_name_perfil"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgFotoPerfil" />
 
     <EditText
         android:id="@+id/edit_name_perfil"
-        android:layout_width="226dp"
-        android:layout_height="69dp"
-        android:layout_gravity="right"
-        android:layout_marginTop="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
         android:hint="@string/hint_name_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgFotoPerfil" />
@@ -56,19 +59,21 @@
         android:id="@+id/campo_email_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="52dp"
         android:text="@string/text_email_perfil"
         android:textSize="@dimen/sizeCampos"
         app:layout_constraintEnd_toStartOf="@+id/edit_email_perfil"
-        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintHorizontal_bias="0.288"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/campo_name_perfil" />
 
     <EditText
         android:id="@+id/edit_email_perfil"
-        android:layout_width="196dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="72dp"
         android:hint="@string/hint_email_perfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_name_perfil" />
@@ -77,8 +82,8 @@
         android:id="@+id/campo_pwd_perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
         android:text="@string/text_pwd_perfil"
         android:textSize="@dimen/sizeCampos"
         app:layout_constraintEnd_toStartOf="@+id/edit_pwd_perfil"
@@ -88,9 +93,12 @@
 
     <EditText
         android:id="@+id/edit_pwd_perfil"
-        android:layout_width="196dp"
-        android:layout_height="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
         android:hint="@string/hint_pwd_perfil"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_email_perfil" />
 

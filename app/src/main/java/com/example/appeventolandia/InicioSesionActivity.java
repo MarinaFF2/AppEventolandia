@@ -32,14 +32,14 @@ public class InicioSesionActivity extends AppCompatActivity {
     private void addDate() {
         //comprobamos si hay usuarios en la BBDD,
         //sino lanzamos los insert para insertar usuarios para iniciar la app con datos
-       // if(connection.listUsers()==null){
-            Usuario.insertUsuarioIniciales(InicioSesionActivity.this);
-        //}
+       if(connection.listUsers()==null){
+           Usuario.insertUsuarioIniciales(InicioSesionActivity.this);
+       }
         //comprobamos si hay eventos en la BBDD,
         //sino lanxzamos los insert para insertar eventos para iniciar la app con datos
-        //if(connection.listEvents()==null){
-           // Evento.insertEventoIniciales(InicioSesionActivity.this);
-        //}
+        if(connection.listEvents()==null){
+            Evento.insertEventoIniciales(InicioSesionActivity.this);
+        }
     }
     private void addMenu() {
         //añadimos el action bar a la activity
@@ -61,9 +61,7 @@ public class InicioSesionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //comprobamos que los editText no estén vacios
                 if(editView_correo_inicioSesion.getText().toString() != null && editView_pwd_inicioSesion.getText().toString() != null){
-                    String pwd = editView_pwd_inicioSesion.getText().toString()+"";
-                    String email = editView_correo_inicioSesion.getText().toString();
-                    Usuario user = connection.existUserByCorreoPwd(email,pwd);
+                    Usuario user = connection.existUserByCorreoPwd(editView_correo_inicioSesion.getText().toString(),editView_pwd_inicioSesion.getText().toString());
 
                     if(user != null) {//indica que el usuario existe en la BBDD con ese correo y esa contraseña
                         //nos redirigimos a la bienvenida del usuario

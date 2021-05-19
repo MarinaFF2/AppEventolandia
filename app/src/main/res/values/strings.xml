@@ -11,7 +11,7 @@
 
     <string name="nav_open_drawer">Open Navigation Drawer</string>
     <string name="nav_close_drawer">Close Navigation Drawer</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_perfil">Perfil</string>
     <string name="text_gestEvent_title">GESTIONAR EVENTOS</string>
@@ -20,8 +20,8 @@
     <string name="menu_welcome">Welcome</string>
     <string name="nav_home">Home</string>
     <string name="title_perfil">Perfil</string>
-    <string name="hint_name_perfil">Introduce un nombre y apellidos</string>
-    <string name="text_name_perfil">Nombre y apellidos</string>
+    <string name="hint_name_perfil">Introduce nombre apellidos</string>
+    <string name="text_name_perfil">Nombre Apellidos</string>
     <string name="text_email_perfil">Correo</string>
     <string name="hint_email_perfil">Introduce el correo</string>
     <string name="button_save_perfil">Guardar</string>

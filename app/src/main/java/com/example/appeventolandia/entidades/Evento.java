@@ -130,7 +130,7 @@ public class Evento  implements Serializable {
         listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,2,"ubicación","10/06/2020","5h",150.50));
         listEvent.add(new Evento("Bautizo Gomez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",5,2,"ubicación","15/06/2020","5h",150.50));
 
-        ConexionBBDD connection = new ConexionBBDD(activity,"bd_events",null,1);
+        ConexionBBDD connection = new ConexionBBDD(activity,"bd_events",null,2);
         for (Evento evento:listEvent) {
             connection.insertEvento(evento, activity);
         }

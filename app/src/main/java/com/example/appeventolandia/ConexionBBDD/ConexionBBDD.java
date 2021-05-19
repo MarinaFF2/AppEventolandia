@@ -88,7 +88,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
     }
     public void insertUser(Usuario user, Activity activity) {
         //antes de insertar comprobamos que el correo no se repìta
-      //  if(existUserByCorreo(user.getCorreo())==null){
+        if(existUserByCorreo(user.getCorreo())==null){
             db = this.getWritableDatabase();//declaro la bariable para poder interactuar con la bbdd
 
             //metemos los valores a insertar
@@ -108,9 +108,9 @@ public class ConexionBBDD extends SQLiteOpenHelper {
                 Toast.makeText(activity, "Error inserted the user", Toast.LENGTH_SHORT).show();
             }
             db.close();
-        //}else{
-        //    Toast.makeText(context,"Ya existe un usuario con este correo ",Toast.LENGTH_SHORT).show();
-       // }
+        }else{
+            Toast.makeText(context,"Ya existe un usuario con este correo ",Toast.LENGTH_SHORT).show();
+        }
     }
     public Usuario existUserByCorreoPwd(String correo,String pwd){
         db = getReadableDatabase();
@@ -129,7 +129,6 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setFoto(cursor.getInt(5));
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
             user = null;
         }
         db.close();
@@ -318,12 +317,12 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         return event;
     }
+
     public ArrayList<Evento> listEventsByCliente(int idCliente) {
         //SACA TODAS LOS Eventos
         ArrayList<Evento> listEvents  = new ArrayList<>();
 
         db = getReadableDatabase();
-        Usuario user = null;
         String[] parametros={idCliente+""};
 
         String[] campos={Utilidades.CAMPO_ID_EVENT,Utilidades.CAMPO_NOMBRE_EVENT,Utilidades.CAMPO_DESCRIPCION_EVENT,
@@ -360,7 +359,6 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         ArrayList<Evento> listEvents  = new ArrayList<>();
 
         db = getReadableDatabase();
-        Usuario user = null;
         String[] parametros={idOrganizador+""};
 
         String[] campos={Utilidades.CAMPO_ID_EVENT,Utilidades.CAMPO_NOMBRE_EVENT,Utilidades.CAMPO_DESCRIPCION_EVENT,
