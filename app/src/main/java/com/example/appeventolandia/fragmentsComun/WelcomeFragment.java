@@ -1,4 +1,4 @@
-package com.example.appeventolandia.fragments;
+package com.example.appeventolandia.fragmentsComun;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

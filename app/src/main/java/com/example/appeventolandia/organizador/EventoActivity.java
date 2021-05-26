@@ -1,6 +1,7 @@
-package com.example.appeventolandia;
+package com.example.appeventolandia.organizador;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -11,10 +12,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EventoActivity extends AppCompatActivity {
@@ -28,21 +33,68 @@ public class EventoActivity extends AppCompatActivity {
     private EditText editDuracionEvento;
     private EditText editPrecioEvento;
 
+    private ConexionBBDD connection;
     private Evento evento;
+    private ArrayList<Usuario> listUserOrganizador;
+    private ArrayList<Usuario> listUserCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
 
-        declaracionElementos();
-        addSpinnerTipoEvento();
-        addSpinnerCliente();
-        addSpinnerOrganizador();
+        addMenu(); //añadimos menu
+        addData();
+        addEventSpinner();
         addFechaEvento();
         addButtonSave();
     }
 
+    private void addEventSpinner() {
+        //añadimos evento del spinnerOrganEvento
+     /*   spinnerOrganEvento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Usuario user  = listUserOrganizador.get(position);
+                evento.setIdOrganizador(user.getId());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        //añadimos evento del spinnerClienteEvento
+        spinnerClienteEvento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Usuario user  = listUserCliente.get(position);
+                evento.setIdCliente(user.getId());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        //añadimos evento del spinnerTipoEvento
+        spinnerTipoEvento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String[] cmd = getResources().getStringArray(R.array.tipoEvento_array);
+                String tipo  = cmd[position];
+                evento.setTipoEvento(tipo);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+      */
+    }
+    private void addMenu() {
+        //añadimos el action bar a la activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //ponemos el icono de la app
+        toolbar.setLogo(R.drawable.eventolandia);
+        //añadimos flecha para atrása la activity
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
     private void addButtonSave() {
         Button buttonSave = (Button) findViewById(R.id.buttonSaveEvento);
         buttonSave.setOnClickListener(new View.OnClickListener(){
@@ -55,8 +107,11 @@ public class EventoActivity extends AppCompatActivity {
     private void saveEvento() {
 
     }
+    private void addData() {
+        //hacemos la conexión con la BBDD
+        connection = new ConexionBBDD(this,"bd_events",null,2);
 
-    private void declaracionElementos() {
+        TextView title_evento_gestionar = (TextView) findViewById(R.id.title_evento_gestionar);
         editNombreEvento = (EditText) findViewById(R.id.editNombreEvento);
         editDescripcionEvento = (EditText) findViewById(R.id.editDescripcionEvento);
         spinnerTipoEvento = (Spinner) findViewById(R.id.spinnerTipoEvento);
@@ -66,6 +121,44 @@ public class EventoActivity extends AppCompatActivity {
         editFechaEvento = (EditText) findViewById(R.id.editFechaEvento);
         editDuracionEvento = (EditText) findViewById(R.id.editDuracionEvento);
         editPrecioEvento = (EditText) findViewById(R.id.editPrecioEvento);
+
+        addSpinnerOrganizador();
+        addSpinnerCliente();
+        addSpinnerTipoEvento();
+
+        if((Evento) getIntent().getExtras().getSerializable("evento") != null){
+            title_evento_gestionar.setText(R.string.title_evento_modificar);
+
+            evento = (Evento) getIntent().getExtras().getSerializable("evento");
+
+            editNombreEvento.setText(evento.getNombre());
+            editDescripcionEvento.setText(evento.getDescripcion());
+            editUbicacionEvento.setText(evento.getUbicacion());
+            editFechaEvento.setText(evento.getFecha());
+            editDuracionEvento.setText(evento.getDuracion()+"");
+            editPrecioEvento.setText(evento.getPrecio()+"€");
+
+            //seleccionamos cliente
+            for (int i=0; i < listUserCliente.size(); i++){
+                if(listUserCliente.get(i).getId() == evento.getIdCliente()){
+                    spinnerClienteEvento.setSelection(i);
+                    break;
+                }
+            }
+            spinnerClienteEvento.setSelection(evento.getIdCliente());
+            //seleccionamos organizador
+           for (int i=0; i < listUserOrganizador.size(); i++){
+               if(listUserOrganizador.get(i).getId() == evento.getIdOrganizador()){
+                   spinnerOrganEvento.setSelection(i);
+                   break;
+               }
+           }
+            //seleccionamos TipoEvento
+            spinnerTipoEvento.setSelection(Evento.tipoEventoByInt(evento.getTipoEvento()));
+        }else{
+            evento = new Evento();
+            title_evento_gestionar.setText(R.string.title_evento_aniadir);
+        }
     }
     private void addFechaEvento() {
         editFechaEvento.setOnClickListener(new View.OnClickListener(){
@@ -92,48 +185,35 @@ public class EventoActivity extends AppCompatActivity {
         //mostramos el dilog
         dpd.show();
     }
-
     private void addSpinnerOrganizador() {
-
-
-        //añadimos evento del spinnerOrganEvento
-        spinnerOrganEvento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Usuario user  = (Usuario) parent.getItemAtPosition(position);
-                evento.setIdOrganizador(user.getId());
-            }
-        });
+        listUserOrganizador = connection.listUsuariosByOrganizador();
+        // Cree un ArrayAdapter usando un string array y un spinner layout predeterminado
+        ArrayAdapter<Usuario> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,listUserOrganizador);
+        // especificamos el tipo de layout que queremos mostrar en el spinner
+       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // aplicamos el adpatador al spinner
+       spinnerOrganEvento.setAdapter(adapter);
     }
-
     private void addSpinnerCliente() {
-
-
-        //añadimos evento del spinnerClienteEvento
-        spinnerClienteEvento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Usuario user  = (Usuario) parent.getItemAtPosition(position);
-                evento.setIdCliente(user.getId());
-            }
-        });
+        listUserCliente = connection.listUsuariosByCliente();
+        // Cree un ArrayAdapter usando un string array y un spinner layout predeterminado
+        ArrayAdapter<Usuario> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,listUserCliente);
+        // especificamos el tipo de layout que queremos mostrar en el spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // aplicamos el adpatador al spinner
+        spinnerClienteEvento.setAdapter(adapter);
     }
-
     private void addSpinnerTipoEvento() {
         // Cree un ArrayAdapter usando un string array y un spinner layout predeterminado
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.tipoEvento_array, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),R.array.tipoEvento_array, android.R.layout.simple_spinner_item);
         // especificamos el tipo de layout que queremos mostrar en el spinner
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // aplicamos el adpatador al spinner
         spinnerTipoEvento.setAdapter(adapter);
-
-        //añadimos evento del spinnerTipoEvento
-        spinnerTipoEvento.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String tipo  = (String) parent.getItemAtPosition(position);
-                evento.setTipoEvento(tipo);
-            }
-        });
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return false;
     }
 }

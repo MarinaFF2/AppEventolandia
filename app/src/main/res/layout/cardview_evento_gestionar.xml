@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cvEvento"
+    android:id="@+id/cvEventoGestionar"
     android:layout_margin="8dp"
     card_view:cardCornerRadius="10dp"
     >
@@ -16,13 +16,13 @@
         android:padding="8dp"
         >
         <ImageView
-            android:id="@+id/ImgcvTipoEvento"
+            android:id="@+id/ImgcvTipoEventoGestionar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerInside"
             android:src="@drawable/bautizo"/>
        <TextView
-           android:id="@+id/tvcvFechaEvento"
+           android:id="@+id/tvcvFechaEventoGestionar"
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:textAlignment="center"
@@ -30,14 +30,14 @@
            android:text="Fecha"/>
 
         <TextView
-            android:id="@+id/tvcvNombreEvento"
+            android:id="@+id/tvcvNombreEventoGestionar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="nombre"/>
 
         <TextView
-            android:id="@+id/tvcvTipoEvento"
+            android:id="@+id/tvcvClienteEventoGestionar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"

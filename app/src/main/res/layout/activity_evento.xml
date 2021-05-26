@@ -1,9 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EventoActivity">
+    android:orientation="vertical"
+    tools:context=".organizador.EventoActivity"
+    >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layoutInterno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar_main" />
+
+            <TextView
+                android:id="@+id/title_evento_gestionar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_evento_modificar"
+                android:textAlignment="center"
+                android:textSize="@dimen/sizeTitle2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title_editNombreEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sizeCampos"
+                android:text="@string/text_nombreEvento"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editNombreEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_nombreEvento"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_editDescripcionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_descripcionEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editDescripcionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_descripcionEvento"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_spinnerTipoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_TipoEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/spinnerTipoEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_spinnerClienteEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_ClienteEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/spinnerClienteEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_spinnerOrganEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_OrganEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <Spinner
+                android:id="@+id/spinnerOrganEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_editUbicacionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_UbicacionEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editUbicacionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_UbicacionEvento"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_editFechaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_fechaEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editFechaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:ems="10"
+                android:focusable="false"
+                android:hint="@string/edit_fechaEvento"
+                android:inputType="date"
+                android:maxLines="1"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_editDuracionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_DuracionEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editDuracionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_DuracionEvento"
+                android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/title_editPrecioEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_PrecioEvento"
+                android:textSize="@dimen/sizeCampos"
+                android:textAlignment="center" />
+
+            <EditText
+                android:id="@+id/editPrecioEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_PrecioEvento"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonSaveEvento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="@string/buttonSave"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutInterno"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

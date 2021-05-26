@@ -31,4 +31,49 @@
     <string name="nav_usuarios_admin">Gestionar usuarios</string>
     <string name="title_welcome">Bienvenido a Eventolandia</string>
     <string name="title_gestionarUsuarios">Gestionar Usuarios</string>
+    <string name="edit_fechaEvento">Introduce la fecha del evento</string>
+    <string name="edit_nombreEvento">Introduce nombre</string>
+    <string name="edit_descripcionEvento">Introduce descripción</string>
+    <string name="text_descripcionEvento">Descripción</string>
+    <string name="text_nombreEvento">Nombre</string>
+    <string name="text_fechaEvento">Fecha</string>
+    <string name="text_TipoEvento">Tipo de evento</string>
+    <string name="text_ClienteEvento">Cliente</string>
+    <string name="text_OrganEvento">Organizador</string>
+    <string name="edit_PrecioEvento">Introduce precio</string>
+    <string name="edit_DuracionEvento">Introduce duración</string>
+    <string name="text_DuracionEvento">Duración</string>
+    <string name="text_PrecioEvento">Precio</string>
+    <string name="edit_UbicacionEvento">Introduce ubicación</string>
+    <string name="text_UbicacionEvento">Ubicación</string>
+    <string name="buttonSave">Guardar</string>
+    <string name="nav_cerrarSesion">Cerrar Sesión</string>
+    <string name="cliente_tab">CLIENTE</string>
+    <string name="organizador_tab">ORGANIZADOR</string>
+    <string name="admin_tab">ADMINISTRADOR</string>
+    <string name="admin_orga_tab">ADMIN-ORGA</string>
+    <string name="title_usuario_aniadir">Nuevo Usuario</string>
+    <string name="title_usuario_modificar">Modificar Usuario</string>
+    <string name="text_nombre_usuario">Nombre y Apellidos:</string>
+    <string name="text_id_usuario">Id:</string>
+    <string name="text_correo_usuario">Correo:</string>
+    <string name="text_pwd_usuario">Contraseña:</string>
+    <string name="text_rol_usuario">Rol:</string>
+    <string name="title_evento_aniadir">Añadir Evento</string>
+    <string name="title_evento_modificar">Modificar Evento</string>
+
+    <string-array name="tipoEvento_array">
+        <item name="Bautizo">Bautizo</item>
+        <item name="Boda">Boda</item>
+        <item name="Comunion">Comunión</item>
+        <item name="Compromiso">Compromiso</item>
+        <item name="Aniversario">Aniversario</item>
+        <item name="Cumpleanios">Cumpleaños</item>
+    </string-array>
+    <string-array name="rolUsuario_array">
+        <item name="0">Cliente</item>
+        <item name="1">Organizador</item>
+        <item name="2">Administrador</item>
+        <item name="3">Administrador - Organizador</item>
+    </string-array>
 </resources>

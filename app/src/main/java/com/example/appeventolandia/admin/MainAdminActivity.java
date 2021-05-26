@@ -1,5 +1,6 @@
-package com.example.appeventolandia;
+package com.example.appeventolandia.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -12,10 +13,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/MainAdminActivity.java
+import com.example.appeventolandia.entidades.Evento;
+=======
+import com.example.appeventolandia.InicioSesionActivity;
+import com.example.appeventolandia.R;
+>>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/admin/MainAdminActivity.java
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragmentsComun.PerfilFragment;
-import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
-import com.example.appeventolandia.admin.GestionarUsuariosFragment;
+import com.example.appeventolandia.fragments.PerfilFragment;
+import com.example.appeventolandia.fragments.WelcomeFragment;
+import com.example.appeventolandia.fragments.admin.GestionarUsuariosFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainAdminActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,7 +42,7 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
     }
 
     private void addUserSesion() {
-        //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
 
     private void addNavigationView() {
@@ -55,9 +62,8 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.eventolandia);
         //ponemos el icono de la app
-        //getSupportActionBar().setIcon(R.drawable.logo);
+        toolbar.setLogo(R.drawable.eventolandia);
 
         //añadimos el DrawerLayout
         DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_layout);
@@ -70,13 +76,18 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        fragment = null;
+
         switch (id){
             case R.id.nav_perfil_admin:
                 fragment = new PerfilFragment();
                 break;
             case R.id.nav_usuarios_admin:
                 fragment = new GestionarUsuariosFragment();
+                break;
+            case R.id.nav_cerrarSesion_cliente:
+                fragment = null;
+                Intent intent = new Intent(this, InicioSesionActivity.class);
+                startActivity(intent);
                 break;
             default:
                 fragment = new WelcomeFragment();
@@ -86,16 +97,17 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         if(fragment != null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment,fragment);
+
             //pasamos el usuario de la sesion
             Bundle data = new Bundle();
-          //  data.putSerializable("userSesion",userSesion);
+            data.putSerializable("userSesion",userSesion);
             fragment.setArguments(data);
 
             fragmentTransaction.commit();
-        }
 
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_layout);
-        drawer_layout.closeDrawer(GravityCompat.START);
+            DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_layout);
+            drawer_layout.closeDrawer(GravityCompat.START);
+        }
 
         return true;
     }

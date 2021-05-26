@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainOrganizadorActivity"
+    tools:context=".organizador.MainOrganizadorActivity"
     android:id="@+id/drawer_organizador_layout">
 
     <LinearLayout

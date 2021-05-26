@@ -104,7 +104,7 @@ public class Usuario implements Serializable {
             connection.insertUser(user,activity);
         }
     }
-    public String rol(){
+    public String rolByID(){
         String rol = null;
         switch (this.idRol){
             case 0:
@@ -122,10 +122,27 @@ public class Usuario implements Serializable {
         }
         return rol;
     }
+    public static int rolByNombre(String rol){
+        int idRol = -1;
+        switch (rol){
+            case "cliente":
+                idRol = 0;
+                break;
+            case "organizador":
+                idRol = 1;
+                break;
+            case "administrador":
+                idRol = 2;
+                break;
+            case "admin-organizador":
+                idRol = 3;
+                break;
+        }
+        return idRol;
+    }
     @Override
     public String toString() {
         return "Id=: " + id + "\n" +
-                "Nombre y Apellidos: '" + nombreApellidos+"'"+ "\n" +
-                "Rol: '" + rol()+"'";
+                "Nombre: " + nombreApellidos;
     }
 }

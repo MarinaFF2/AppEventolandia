@@ -10,12 +10,14 @@
         <item android:id="@+id/nav_perfil_admin"
             android:title="@string/nav_perfil"
             android:icon="@drawable/user"
-            android:checked="true"
             />
         <item android:id="@+id/nav_usuarios_admin"
             android:title="@string/nav_usuarios_admin"
             android:icon="@drawable/user"
-            android:checked="true"
+            />
+        <item android:id="@+id/nav_cerrarSesion_cliente"
+            android:title="@string/nav_cerrarSesion"
+            android:icon="@drawable/cerrar_sesion"
             />
     </group>
 

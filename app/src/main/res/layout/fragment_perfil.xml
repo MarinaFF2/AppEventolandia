@@ -4,111 +4,90 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.PerfilFragment">
+    tools:context=".fragmentsComun.PerfilFragment">
 
-    <TextView
-        android:id="@+id/title_perfil"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title_perfil"
-        android:textAlignment="center"
-        android:textSize="@dimen/sizeTitle"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="409dp"
+        android:layout_height="680dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.mikhaellopez.circularimageview.CircularImageView
-        android:id="@+id/imgFotoPerfil"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/title_perfil"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/user"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_perfil" />
+        <TextView
+            android:id="@+id/title_perfil"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_perfil"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeTitle"/>
 
-    <TextView
-        android:id="@+id/campo_name_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/text_name_perfil"
-        android:textSize="@dimen/sizeCampos"
-        app:layout_constraintEnd_toStartOf="@+id/edit_name_perfil"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFotoPerfil" />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/imgFotoPerfil"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/user" />
 
-    <EditText
-        android:id="@+id/edit_name_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/hint_name_perfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFotoPerfil" />
+        <TextView
+            android:id="@+id/campo_name_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/text_name_perfil"
+            android:textSize="@dimen/sizeCampos"/>
 
-    <TextView
-        android:id="@+id/campo_email_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/text_email_perfil"
-        android:textSize="@dimen/sizeCampos"
-        app:layout_constraintEnd_toStartOf="@+id/edit_email_perfil"
-        app:layout_constraintHorizontal_bias="0.288"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/campo_name_perfil" />
+        <EditText
+            android:id="@+id/edit_name_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="@string/hint_name_perfil" />
 
-    <EditText
-        android:id="@+id/edit_email_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="72dp"
-        android:hint="@string/hint_email_perfil"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_name_perfil" />
+        <TextView
+            android:id="@+id/campo_email_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/text_email_perfil"
+            android:textSize="@dimen/sizeCampos" />
 
-    <TextView
-        android:id="@+id/campo_pwd_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/text_pwd_perfil"
-        android:textSize="@dimen/sizeCampos"
-        app:layout_constraintEnd_toStartOf="@+id/edit_pwd_perfil"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/campo_email_perfil" />
+        <EditText
+            android:id="@+id/edit_email_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="@string/hint_email_perfil"/>
 
-    <EditText
-        android:id="@+id/edit_pwd_perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/hint_pwd_perfil"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_email_perfil" />
+        <TextView
+            android:id="@+id/campo_pwd_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/text_pwd_perfil"
+            android:textSize="@dimen/sizeCampos" />
+
+        <EditText
+            android:id="@+id/edit_pwd_perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:hint="@string/hint_pwd_perfil"
+            android:inputType="textPassword" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_save_perfil"
-        android:layout_width="405dp"
-        android:layout_height="48dp"
-        android:text="@string/button_save_perfil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:text="@string/button_save_perfil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout >

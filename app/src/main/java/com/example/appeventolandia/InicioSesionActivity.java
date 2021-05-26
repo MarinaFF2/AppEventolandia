@@ -9,8 +9,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+import com.example.appeventolandia.admin.MainAdminActivity;
+import com.example.appeventolandia.cliente.MainClienteActivity;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
+import com.example.appeventolandia.organizador.MainOrganizadorActivity;
 
 public class InicioSesionActivity extends AppCompatActivity {
 
@@ -46,7 +49,7 @@ public class InicioSesionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         //ponemos el icono de la app
-        getSupportActionBar().setIcon(R.drawable.logo);
+        getSupportActionBar().setIcon(R.drawable.eventolandia);
     }
 
     private void buttonEvent() {
@@ -71,13 +74,13 @@ public class InicioSesionActivity extends AppCompatActivity {
                                 intent = new Intent(InicioSesionActivity.this, MainClienteActivity.class);
                                 break;
                             case 1:// Bienvenida organizador
-                                intent = new Intent(InicioSesionActivity.this, MainClienteActivity.class);
+                                intent = new Intent(InicioSesionActivity.this, MainOrganizadorActivity.class);
                                 break;
                             case 2:// Bienvenida administrador
-                                intent = new Intent(InicioSesionActivity.this, MainClienteActivity.class);
+                                intent = new Intent(InicioSesionActivity.this, MainAdminActivity.class);
                                 break;
                             case 3:// Bienvenida admin-organizador
-                                intent = new Intent(InicioSesionActivity.this, MainClienteActivity.class);
+                                intent = new Intent(InicioSesionActivity.this, MainAdminOrganizadorActivity.class);
                                 break;
                         }
                         intent.putExtra("userSesion", user); //guardamos el usuario para saber quien es

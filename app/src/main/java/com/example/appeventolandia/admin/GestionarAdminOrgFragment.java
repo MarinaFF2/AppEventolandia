@@ -1,60 +1,28 @@
 package com.example.appeventolandia.admin;
 
+import android.content.Intent;
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
 import com.example.appeventolandia.R;
+import com.example.appeventolandia.entidades.Usuario;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link GestionarAdminOrgFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class GestionarAdminOrgFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public GestionarAdminOrgFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment GestionarAdminOrgFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static GestionarAdminOrgFragment newInstance(String param1, String param2) {
-        GestionarAdminOrgFragment fragment = new GestionarAdminOrgFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private ListView list_gestionarUsuarios;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -62,5 +30,51 @@ public class GestionarAdminOrgFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gestionar_admin_org, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //asignamos el listener creado a la ListView
+        list_gestionarUsuarios = (ListView) view.findViewById(R.id.list_gestionarUsuariosAdminOrg);
+
+        addListView(view);//añadimos el listView
+        addNewUser(view); //boton añadir nuevo usuario
+    }
+
+    private void addNewUser(View view) {
+        FloatingActionButton buttonNewUser = (FloatingActionButton) view.findViewById(R.id.buttonNewUser);
+        buttonNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
+                Usuario user = null;
+                intent.putExtra("usuario",user);
+                startActivity(intent);
+            }
+        });
+    }
+    private void addListView(View view) {
+        //hacemos la conexión con la BBDD
+        ConexionBBDD connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
+        ArrayList<Usuario> listUser = connection.listUsuariosByOrgaAdmin();
+
+        //creamos el adaptador para acceder a los datos de la clase JAVA Usuario
+        ArrayAdapter<Usuario> listAdapter = new ArrayAdapter<>(view.getContext(), android.R.layout.simple_list_item_1,listUser);
+        //asignamos el adaptador al elemento grafico que lo va a usar
+        list_gestionarUsuarios.setAdapter(listAdapter);
+
+        //creaccion del listener, cuando hacemos clic en el listView
+        AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> listView, View itemView, int position, long id) {
+                Usuario user = listUser.get(position);
+                Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
+                intent.putExtra("usuario",user);
+                startActivity(intent);
+            }
+        };
+
+        list_gestionarUsuarios.setOnItemClickListener(itemClickListener);
     }
 }

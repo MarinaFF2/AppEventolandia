@@ -3,4 +3,8 @@
     <dimen name="sizeTitle">50sp</dimen>
     <dimen name="sizeTitle2">30sp</dimen>
     <dimen name="sizeCampos">20sp</dimen>
+    <dimen name="width_editText">153dp</dimen>
+    <dimen name="height_editText">20dp</dimen>
+    <dimen name="sizeWidthCampos">250dp</dimen>
+    <dimen name="marginTop">20dp</dimen>
 </resources>

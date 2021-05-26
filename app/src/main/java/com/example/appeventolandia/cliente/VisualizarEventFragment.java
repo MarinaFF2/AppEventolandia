@@ -1,16 +1,19 @@
-package com.example.appeventolandia.fragments.cliente;
+package com.example.appeventolandia.cliente;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
-import com.example.appeventolandia.EventosCardViewAdapter;
+<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/fragments/cliente/VisualizarEventFragment.java
+=======
+import com.example.appeventolandia.adaptadores.EventosCardViewAdapter;
+>>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/cliente/VisualizarEventFragment.java
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
@@ -20,7 +23,7 @@ public class VisualizarEventFragment extends Fragment {
     private Usuario userSesion;
     private ConexionBBDD connection;
     private ArrayList<Evento> listEvents;
-    private RecyclerView rvListEvents;
+    private CalendarView calendario;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,25 +36,35 @@ public class VisualizarEventFragment extends Fragment {
 
         //hacemos la conexión con la BBDD
         connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
+<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/fragments/cliente/VisualizarEventFragment.java
+        //declaramos el calendario
+        calendario = (CalendarView) view.findViewById(R.id.calendarView_VisualizarEventFragment);
+=======
         //extendes Fragment, hay que heredarlo para que funcione
-        rvListEvents = (RecyclerView) view.findViewById(R.id.rvListEvents);
+        rvListEvents = (RecyclerView) view.findViewById(R.id.rvListShowEvents);
+>>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/cliente/VisualizarEventFragment.java
 
         addUserSesion();//recogemos la userSesion
-        addRecyclerView(view);//cargamos los eventos que organiza
+        addData();//cargamos los eventos que organiza
     }
 
-    private void addRecyclerView(View view) {
+    private void addData() {
+        int id = userSesion.getId();
         //recogemos los eventos del cliente
+<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/fragments/cliente/VisualizarEventFragment.java
+        listEvents = connection.listEventsByCliente(id);
+=======
         listEvents = connection.listEventsByCliente(userSesion.getId());
 
         //añado layout de como se va a ver
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(),3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(),2);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         rvListEvents.setLayoutManager(gridLayoutManager);
 
         //añado adaptador
         EventosCardViewAdapter adapter = new EventosCardViewAdapter(listEvents,userSesion,view.getContext());
         rvListEvents.setAdapter(adapter);
+>>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/cliente/VisualizarEventFragment.java
     }
     private void addUserSesion(){
         //recogemos la cookie del usuario

@@ -1,9 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin.UsuarioActivity">
 
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar_main"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_main" />
+
+        <TextView
+            android:id="@+id/title_usuario_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/title_usuario_modificar"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeTitle2"/>
+
+        <TextView
+            android:id="@+id/text_id_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/text_id_usuario"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeCampos"/>
+
+        <EditText
+            android:id="@+id/text_value_id_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:hint="@string/text_id_usuario"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/text_nombre_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop"
+            android:text="@string/text_nombre_usuario"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeCampos" />
+
+        <EditText
+            android:id="@+id/edit_nombre_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_nombre_usuario"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_correo_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop"
+            android:text="@string/text_correo_usuario"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeCampos"/>
+
+        <EditText
+            android:id="@+id/edit_correo_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_correo_usuario"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_pwd_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop"
+            android:text="@string/text_pwd_usuario"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeCampos" />
+
+        <EditText
+            android:id="@+id/edit_pwd_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/text_pwd_usuario"
+            android:inputType="textPassword"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_rol_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/marginTop"
+            android:text="@string/text_rol_usuario"
+            android:textAlignment="center"
+            android:textSize="@dimen/sizeCampos" />
+
+        <Spinner
+            android:id="@+id/spinner_rol_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonSaveUsuarioActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@color/colorPrimary"
+        android:text="@string/buttonSave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

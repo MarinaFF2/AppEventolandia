@@ -7,20 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
 import com.example.appeventolandia.R;
-import com.example.appeventolandia.cliente.VisualizarEventoActivity;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
-
+import com.example.appeventolandia.organizador.EventoActivity;
 import java.util.ArrayList;
 
-public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardViewAdapter.EventoViewHolder>{
+public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<EventosGestionarCardViewAdapter.EventoViewHolder>{
 
     private ArrayList<Evento> listEvents;
     private Context context;
@@ -28,7 +25,7 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
     private Evento e;
     private Usuario userSesion;
 
-    public EventosCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context) {
+    public EventosGestionarCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context) {
         connection = new ConexionBBDD(context,"bd_events",null,2);
         this.listEvents = listEvents;
         this.context = context;
@@ -39,7 +36,7 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //enlazamos la clase con el layout
-        return new EventoViewHolder((CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_evento,parent,false));
+        return new EventoViewHolder((CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_evento_gestionar,parent,false));
     }
 
     @Override
@@ -47,20 +44,20 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
         //conseguimos el evento de la posición en la que estamos
         e = listEvents.get(position);
         //mostramos textos
-        eventoViewHolder.ImgcvTipoEvento.setImageResource(e.getFoto());
-        eventoViewHolder.tvcvFechaEvento.setText(e.getFecha());
-        eventoViewHolder.tvcvNombreEvento.setText(e.getNombre());
-        eventoViewHolder.tvcvTipoEvento.setText(e.getTipoEvento());
+        eventoViewHolder.ImgcvTipoEventoGestionar.setImageResource(e.getFoto());
+        eventoViewHolder.tvcvFechaEventoGestionar.setText(e.getFecha());
+        eventoViewHolder.tvcvNombreEventoGestionar.setText(e.getNombre());
+        Usuario userCliente = connection.existUserById(e.getIdCliente());
+        eventoViewHolder.tvcvClienteEventoGestionar.setText(userCliente.getNombreApellidos());
         //cambiar de color el cardview
-        eventoViewHolder.cvEvento.setCardBackgroundColor(e.getColor());
-
-        eventoViewHolder.cvEvento.setOnClickListener(new View.OnClickListener() {
+        eventoViewHolder.cvEventoGestionar.setCardBackgroundColor(e.getColor());
+        //cuando hacemos click
+        eventoViewHolder.cvEventoGestionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //creamos el bundle para pasarle la mascota
-                Intent intent = new Intent(context, VisualizarEventoActivity.class);
-                intent.putExtra("eventSesion",e);
-                intent.putExtra("userSesion",userSesion);
+                //creamos el bundle para pasar el evento
+                Intent intent = new Intent(context, EventoActivity.class);
+                intent.putExtra("evento",e);
                 context.startActivity(intent);
             }
         });
@@ -72,20 +69,20 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
     }
 
     public static class EventoViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ImgcvTipoEvento;
-        private TextView tvcvFechaEvento;
-        private TextView tvcvNombreEvento;
-        private TextView tvcvTipoEvento;
-        private CardView cvEvento;
+        private ImageView ImgcvTipoEventoGestionar;
+        private TextView tvcvFechaEventoGestionar;
+        private TextView tvcvNombreEventoGestionar;
+        private TextView tvcvClienteEventoGestionar;
+        private CardView cvEventoGestionar;
 
         public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            cvEvento = (CardView) itemView.findViewById(R.id.cvEvento);
-            ImgcvTipoEvento = (ImageView) itemView.findViewById(R.id.ImgcvTipoEvento);
-            tvcvFechaEvento = (TextView) itemView.findViewById(R.id.tvcvFechaEvento);
-            tvcvNombreEvento = (TextView) itemView.findViewById(R.id.tvcvNombreEvento);
-            tvcvTipoEvento = (TextView) itemView.findViewById(R.id.tvcvTipoEvento);
+            cvEventoGestionar = (CardView) itemView.findViewById(R.id.cvEventoGestionar);
+            ImgcvTipoEventoGestionar = (ImageView) itemView.findViewById(R.id.ImgcvTipoEventoGestionar);
+            tvcvFechaEventoGestionar = (TextView) itemView.findViewById(R.id.tvcvFechaEventoGestionar);
+            tvcvNombreEventoGestionar = (TextView) itemView.findViewById(R.id.tvcvNombreEventoGestionar);
+            tvcvClienteEventoGestionar = (TextView) itemView.findViewById(R.id.tvcvClienteEventoGestionar);
         }
     }
 }

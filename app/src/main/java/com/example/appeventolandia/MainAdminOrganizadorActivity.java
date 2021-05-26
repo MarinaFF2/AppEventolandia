@@ -1,8 +1,8 @@
 package com.example.appeventolandia;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,10 +12,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragments.PerfilFragment;
-import com.example.appeventolandia.fragments.WelcomeFragment;
-import com.example.appeventolandia.fragments.admin.GestionarUsuariosFragment;
-import com.example.appeventolandia.fragments.organizador.GestionarEventosFragment;
+import com.example.appeventolandia.fragmentsComun.PerfilFragment;
+import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
+import com.example.appeventolandia.admin.GestionarUsuariosFragment;
+import com.example.appeventolandia.organizador.GestionarEventosFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainAdminOrganizadorActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,7 +34,7 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
     }
 
     private void addUserSession() {
-        //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
 
     private void addNavigationView() {
@@ -59,9 +59,8 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.eventolandia);
         //ponemos el icono de la app
-        //getSupportActionBar().setIcon(R.drawable.logo);
+        toolbar.setLogo(R.drawable.eventolandia);
 
         //añadimos el DrawerLayout
         DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_organizador_layout);
@@ -74,6 +73,7 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         switch (id){
             case R.id.nav_perfil_adminorg:
                 fragment = new PerfilFragment();
@@ -84,6 +84,11 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
             case R.id.nav_eventos_adminorg:
                 fragment = new GestionarEventosFragment();
                 break;
+            case R.id.nav_cerrarSesion_cliente:
+                fragment = null;
+                Intent intent = new Intent(this,InicioSesionActivity.class);
+                startActivity(intent);
+                break;
             default:
                 fragment = new WelcomeFragment();
                 break;
@@ -92,17 +97,17 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         if(fragment != null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment,fragment);
+
             //pasamos el usuario de la sesion
             Bundle data = new Bundle();
-          //  data.putSerializable("userSesion",userSesion);
+            data.putSerializable("userSesion",userSesion);
             fragment.setArguments(data);
 
             fragmentTransaction.commit();
+
+            DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_organizador_layout);
+            drawer_layout.closeDrawer(GravityCompat.START);
         }
-
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_organizador_layout);
-        drawer_layout.closeDrawer(GravityCompat.START);
-
         return true;
     }
     public void onBackPressed(){

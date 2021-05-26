@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ConexionBBDD extends SQLiteOpenHelper {
     //declaro la bariable para poder interactuar con la bbdd
@@ -216,6 +217,130 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         }
         return listUsers;
     }
+    public ArrayList<Usuario> listUsuariosByAdministrador() {
+        //SACA TODAS LOS Usuario
+        ArrayList<Usuario> listUsers  = new ArrayList<>();
+
+        db = getReadableDatabase();
+
+        try {
+                Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 2 OR "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
+
+            if (cursor.moveToFirst()){
+                do {
+                    Usuario user = new Usuario();
+                    user.setId(cursor.getInt(0));
+                    user.setNombreApellidos(cursor.getString(1));
+                    user.setCorreo(cursor.getString(2));
+                    user.setPwd(cursor.getString(3));
+                    user.setIdRol(cursor.getInt(4));
+                    user.setFoto(cursor.getInt(5));
+
+                    listUsers.add(user);
+
+                } while(cursor.moveToNext());
+            }
+            cursor.close();
+        }catch (Exception e){
+            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        return listUsers;
+    }
+    public ArrayList<Usuario> listUsuariosByCliente() {
+        //SACA TODAS LOS Usuario
+        ArrayList<Usuario> listUsers  = new ArrayList<>();
+
+        db = getReadableDatabase();
+
+        try {
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 0",null);
+
+            if (cursor.moveToFirst()){
+                do {
+                    Usuario user = new Usuario();
+                    user.setId(cursor.getInt(0));
+                    user.setNombreApellidos(cursor.getString(1));
+                    user.setCorreo(cursor.getString(2));
+                    user.setPwd(cursor.getString(3));
+                    user.setIdRol(cursor.getInt(4));
+                    user.setFoto(cursor.getInt(5));
+
+                    listUsers.add(user);
+
+                } while(cursor.moveToNext());
+            }
+            cursor.close();
+        }catch (Exception e){
+            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        return listUsers;
+    }
+    public ArrayList<Usuario> listUsuariosByOrgaAdmin() {
+        //SACA TODAS LOS Usuario
+        ArrayList<Usuario> listUsers  = new ArrayList<>();
+
+        db = getReadableDatabase();
+
+        try {
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
+
+            if (cursor.moveToFirst()){
+                do {
+                    Usuario user = new Usuario();
+                    user.setId(cursor.getInt(0));
+                    user.setNombreApellidos(cursor.getString(1));
+                    user.setCorreo(cursor.getString(2));
+                    user.setPwd(cursor.getString(3));
+                    user.setIdRol(cursor.getInt(4));
+                    user.setFoto(cursor.getInt(5));
+
+                    listUsers.add(user);
+
+                } while(cursor.moveToNext());
+            }
+            cursor.close();
+        }catch (Exception e){
+            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        return listUsers;
+    }
+    public ArrayList<Usuario> listUsuariosByOrganizador() {
+        //SACA TODAS LOS Usuario
+        ArrayList<Usuario> listUsers  = new ArrayList<>();
+
+        db = getReadableDatabase();
+
+        try {
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1  OR  "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
+
+            if (cursor.moveToFirst()){
+                do {
+                    Usuario user = new Usuario();
+                    user.setId(cursor.getInt(0));
+                    user.setNombreApellidos(cursor.getString(1));
+                    user.setCorreo(cursor.getString(2));
+                    user.setPwd(cursor.getString(3));
+                    user.setIdRol(cursor.getInt(4));
+                    user.setFoto(cursor.getInt(5));
+
+                    listUsers.add(user);
+
+                } while(cursor.moveToNext());
+            }
+            cursor.close();
+        }catch (Exception e){
+            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        return listUsers;
+    }
     public void insertEvento(Evento event, Activity activity) {
         //antes de insertar comprobamos que el correo no se repìta
         if(existEventByIDClienteIDOrganizadorFecha(event.getIdCliente(),event.getIdOrganizador(),event.getFecha()) == null) {
@@ -323,28 +448,28 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         ArrayList<Evento> listEvents  = new ArrayList<>();
 
         db = getReadableDatabase();
-        String[] parametros={idCliente+""};
 
-        String[] campos={Utilidades.CAMPO_ID_EVENT,Utilidades.CAMPO_NOMBRE_EVENT,Utilidades.CAMPO_DESCRIPCION_EVENT,
-                Utilidades.CAMPO_TIPO_EVENT,Utilidades.CAMPO_ID_CLIENTE_EVENT, Utilidades.CAMPO_ID_ORGANIZADOR_EVENTO,
-                Utilidades.CAMPO_UBICACION_EVENT,Utilidades.CAMPO_FECHA_EVENT,Utilidades.CAMPO_DURACION_EVENT,Utilidades.CAMPO_PRECIO_EVENT};
         try {
-            Cursor cursor =db.query(Utilidades.TABLA_EVENT,campos,Utilidades.CAMPO_ID_CLIENTE_EVENT+"=?",parametros,null,null,null);
 
-            while (cursor.moveToNext()){
-                Evento event = new Evento();
-                event.setId(cursor.getInt(0));
-                event.setNombre(cursor.getString(1));
-                event.setDescripcion(cursor.getString(2));
-                event.setTipoEvento(cursor.getString(3));
-                event.setIdCliente(cursor.getInt(4));
-                event.setIdOrganizador(cursor.getInt(5));
-                event.setUbicacion(cursor.getString(6));
-                event.setFecha(cursor.getString(7));
-                event.setDuracion(cursor.getString(8));
-                event.setPrecio(cursor.getDouble(9));
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_EVENT+" WHERE "+Utilidades.CAMPO_ID_CLIENTE_EVENT+" = "+idCliente,null);
 
-                listEvents.add(event);
+            if (cursor.moveToFirst()){
+                do {
+                    Evento event = new Evento();
+                    event.setId(cursor.getInt(0));
+                    event.setNombre(cursor.getString(1));
+                    event.setDescripcion(cursor.getString(2));
+                    event.setTipoEvento(cursor.getString(3));
+                    event.setIdCliente(cursor.getInt(4));
+                    event.setIdOrganizador(cursor.getInt(5));
+                    event.setUbicacion(cursor.getString(6));
+                    event.setFecha(cursor.getString(7));
+                    event.setDuracion(cursor.getString(8));
+                    event.setPrecio(cursor.getDouble(9));
+
+                    listEvents.add(event);
+
+                } while(cursor.moveToNext());
             }
             cursor.close();
         }catch (Exception e){
@@ -359,28 +484,28 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         ArrayList<Evento> listEvents  = new ArrayList<>();
 
         db = getReadableDatabase();
-        String[] parametros={idOrganizador+""};
 
-        String[] campos={Utilidades.CAMPO_ID_EVENT,Utilidades.CAMPO_NOMBRE_EVENT,Utilidades.CAMPO_DESCRIPCION_EVENT,
-                Utilidades.CAMPO_TIPO_EVENT,Utilidades.CAMPO_ID_CLIENTE_EVENT, Utilidades.CAMPO_ID_ORGANIZADOR_EVENTO,
-                Utilidades.CAMPO_UBICACION_EVENT,Utilidades.CAMPO_FECHA_EVENT,Utilidades.CAMPO_DURACION_EVENT,Utilidades.CAMPO_PRECIO_EVENT};
         try {
-            Cursor cursor =db.query(Utilidades.TABLA_EVENT,campos,Utilidades.CAMPO_ID_ORGANIZADOR_EVENTO+"=?",parametros,null,null,null);
 
-            while (cursor.moveToNext()){
-                Evento event = new Evento();
-                event.setId(cursor.getInt(0));
-                event.setNombre(cursor.getString(1));
-                event.setDescripcion(cursor.getString(2));
-                event.setTipoEvento(cursor.getString(3));
-                event.setIdCliente(cursor.getInt(4));
-                event.setIdOrganizador(cursor.getInt(5));
-                event.setUbicacion(cursor.getString(6));
-                event.setFecha(cursor.getString(7));
-                event.setDuracion(cursor.getString(8));
-                event.setPrecio(cursor.getDouble(9));
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_EVENT+" WHERE "+Utilidades.CAMPO_ID_ORGANIZADOR_EVENTO+" = "+idOrganizador,null);
 
-                listEvents.add(event);
+            if (cursor.moveToFirst()){
+                do {
+                    Evento event = new Evento();
+                    event.setId(cursor.getInt(0));
+                    event.setNombre(cursor.getString(1));
+                    event.setDescripcion(cursor.getString(2));
+                    event.setTipoEvento(cursor.getString(3));
+                    event.setIdCliente(cursor.getInt(4));
+                    event.setIdOrganizador(cursor.getInt(5));
+                    event.setUbicacion(cursor.getString(6));
+                    event.setFecha(cursor.getString(7));
+                    event.setDuracion(cursor.getString(8));
+                    event.setPrecio(cursor.getDouble(9));
+
+                    listEvents.add(event);
+
+                } while(cursor.moveToNext());
             }
             cursor.close();
         }catch (Exception e){

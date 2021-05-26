@@ -1,4 +1,4 @@
-package com.example.appeventolandia.fragments;
+package com.example.appeventolandia.fragmentsComun;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,12 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Usuario;
 import com.mikhaellopez.circularimageview.CircularImageView;
-
 
 public class PerfilFragment extends Fragment {
     private CircularImageView circularImageView;
@@ -59,7 +57,7 @@ public class PerfilFragment extends Fragment {
         //mostramos la contraseña del usuario
         edit_pwd_perfil.setText(userSesion.getPwd());
         //mostramos la imagen del usuario
-        circularImageView.setImageResource(userSesion.getFoto());
+        //circularImageView.setImageResource(userSesion.getFoto());
     }
 
     private void eventButtonSave() {

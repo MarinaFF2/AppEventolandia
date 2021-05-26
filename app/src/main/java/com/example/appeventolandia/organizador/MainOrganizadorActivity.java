@@ -1,4 +1,4 @@
-package com.example.appeventolandia;
+package com.example.appeventolandia.organizador;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.example.appeventolandia.InicioSesionActivity;
+import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Usuario;
 import com.example.appeventolandia.fragmentsComun.PerfilFragment;
 import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
-import com.example.appeventolandia.organizador.GestionarEventosFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainOrganizadorActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,7 +34,7 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
     }
 
     private void addUserSession() {
-        //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
     private void addNavigationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -52,9 +53,8 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.eventolandia);
         //ponemos el icono de la app
-        //getSupportActionBar().setIcon(R.drawable.logo);
+        toolbar.setLogo(R.drawable.eventolandia);
 
         //añadimos el DrawerLayout
         DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
@@ -67,14 +67,18 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        Fragment fragment = null;
-        Intent intent = null;
+
         switch (id){
             case R.id.nav_perfil_org:
                 fragment = new PerfilFragment();
                 break;
             case R.id.nav_eventos_org:
-                fragment = new GestionarEventosFragment();
+                fragment = new com.example.appeventolandia.organizador.GestionarEventosFragment();
+                break;
+            case R.id.nav_cerrarSesion_cliente:
+                fragment = null;
+                Intent intent = new Intent(this, InicioSesionActivity.class);
+                startActivity(intent);
                 break;
             default:
                 fragment = new WelcomeFragment();
@@ -84,18 +88,17 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
         if(fragment != null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment,fragment);
+
             //pasamos el usuario de la sesion
             Bundle data = new Bundle();
-           // data.putSerializable("userSesion",userSesion);
+            data.putSerializable("userSesion",userSesion);
             fragment.setArguments(data);
 
             fragmentTransaction.commit();
-        }else {
-            startActivity(intent);
-        }
 
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
-        drawer_layout.closeDrawer(GravityCompat.START);
+            DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
+            drawer_layout.closeDrawer(GravityCompat.START);
+        }
 
         return true;
     }
