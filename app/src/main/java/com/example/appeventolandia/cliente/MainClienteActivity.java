@@ -1,8 +1,8 @@
 package com.example.appeventolandia;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,19 +12,19 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragments.PerfilFragment;
-import com.example.appeventolandia.fragments.WelcomeFragment;
-import com.example.appeventolandia.fragments.organizador.GestionarEventosFragment;
+import com.example.appeventolandia.fragmentsComun.PerfilFragment;
+import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
+import com.example.appeventolandia.cliente.VisualizarEventFragment;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainOrganizadorActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
+public class MainClienteActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Usuario userSesion = null;
     private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_organizador);
+        setContentView(R.layout.activity_main_cliente);
 
         addMenu(); //añadimos menu
         addFragment();//añadimos fragment
@@ -33,7 +33,7 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
     }
 
     private void addUserSession() {
-        //userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
     private void addNavigationView() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -42,7 +42,7 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
 
     private void addFragment() {
         //mostramos el fragment
-        Fragment fragment = new WelcomeFragment();
+        fragment = new WelcomeFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.content_fragment,fragment);
         fragmentTransaction.commit();
@@ -57,7 +57,7 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
         //getSupportActionBar().setIcon(R.drawable.logo);
 
         //añadimos el DrawerLayout
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
+        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_cliente_layout);
 
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer_layout,toolbar,R.string.nav_open_drawer,R.string.nav_close_drawer);
         drawer_layout.addDrawerListener(drawerToggle); //lo añadimos al drawer layout
@@ -67,14 +67,12 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        Fragment fragment = null;
-        Intent intent = null;
         switch (id){
-            case R.id.nav_perfil_org:
+            case R.id.nav_perfil_cliente:
                 fragment = new PerfilFragment();
                 break;
-            case R.id.nav_eventos_org:
-                fragment = new GestionarEventosFragment();
+            case R.id.nav_showEvent_cliente:
+                fragment = new VisualizarEventFragment();
                 break;
             default:
                 fragment = new WelcomeFragment();
@@ -86,21 +84,19 @@ public class MainOrganizadorActivity extends AppCompatActivity  implements Navig
             fragmentTransaction.replace(R.id.content_fragment,fragment);
             //pasamos el usuario de la sesion
             Bundle data = new Bundle();
-           // data.putSerializable("userSesion",userSesion);
+            data.putSerializable("userSesion",userSesion);
             fragment.setArguments(data);
 
             fragmentTransaction.commit();
-        }else {
-            startActivity(intent);
         }
 
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
+        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_cliente_layout);
         drawer_layout.closeDrawer(GravityCompat.START);
 
         return true;
     }
     public void onBackPressed(){
-        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_organizador_layout);
+        DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_cliente_layout);
         if(drawer_layout.isDrawerOpen(GravityCompat.START)){
             drawer_layout.closeDrawer(GravityCompat.START);
         }else{
