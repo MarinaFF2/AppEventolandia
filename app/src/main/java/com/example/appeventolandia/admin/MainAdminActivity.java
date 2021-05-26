@@ -13,16 +13,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
-<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/MainAdminActivity.java
-import com.example.appeventolandia.entidades.Evento;
-=======
 import com.example.appeventolandia.InicioSesionActivity;
 import com.example.appeventolandia.R;
->>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/admin/MainAdminActivity.java
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragments.PerfilFragment;
-import com.example.appeventolandia.fragments.WelcomeFragment;
-import com.example.appeventolandia.fragments.admin.GestionarUsuariosFragment;
+import com.example.appeventolandia.fragmentsComun.PerfilFragment;
+import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainAdminActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {

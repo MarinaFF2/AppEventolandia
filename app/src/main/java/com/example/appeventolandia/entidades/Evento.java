@@ -181,7 +181,7 @@ public class Evento  implements Serializable {
         int foto = 0;
         switch (this.tipoEvento){
             case "Boda":
-                foto = R.drawable.anillos_de_boda;
+                foto = R.drawable.boda;
                 break;
             case "Bautizo":
                 foto = R.drawable.bautizo;
@@ -190,7 +190,7 @@ public class Evento  implements Serializable {
                 foto = R.drawable.comunion;
                 break;
             case "Compromiso":
-                foto = R.drawable.anillo_de_compromiso;
+                foto = R.drawable.compromiso;
                 break;
             case "Aniversario":
                 foto = R.drawable.aniversario;

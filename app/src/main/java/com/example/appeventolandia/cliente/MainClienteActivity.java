@@ -12,18 +12,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.example.appeventolandia.InicioSesionActivity;
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Usuario;
-<<<<<<< Updated upstream:app/src/main/java/com/example/appeventolandia/MainClienteActivity.java
-import com.example.appeventolandia.fragments.PerfilFragment;
-import com.example.appeventolandia.fragments.WelcomeFragment;
-import com.example.appeventolandia.fragments.cliente.VisualizarEventFragment;
-=======
 import com.example.appeventolandia.fragmentsComun.PerfilFragment;
 import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
->>>>>>> Stashed changes:app/src/main/java/com/example/appeventolandia/cliente/MainClienteActivity.java
 import com.google.android.material.navigation.NavigationView;
 
 public class MainClienteActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
