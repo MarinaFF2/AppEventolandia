@@ -11,11 +11,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import com.example.appeventolandia.R;
+import com.example.appeventolandia.entidades.Usuario;
 import com.google.android.material.tabs.TabLayout;
 
 
 public class GestionarUsuariosFragment extends Fragment {
     private ViewPager pager;
+    private Usuario userSesion = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,12 +35,21 @@ public class GestionarUsuariosFragment extends Fragment {
 
         addViewPager(view);
         addTabLayout(view);
+        addUserSesion();
     }
-
+    private void addUserSesion(){
+        //recogemos la cookie del usuario
+        userSesion = null;
+        Bundle data = this.getArguments();
+        if(data != null){
+            userSesion = (Usuario) data.getSerializable("userSesion");
+        }
+    }
     private void addViewPager(View view) {
         //añadimos adaptador view pager
         SectionPagerAdapter pagerAdapter = new SectionPagerAdapter(getFragmentManager());
-        pager = (ViewPager) view.findViewById(R.id.pager);
+
+        pager = (ViewPager) view.findViewById(R.id.pagerGestionUsuarios);
         pager.setAdapter(pagerAdapter);
     }
 
@@ -60,13 +71,13 @@ public class GestionarUsuariosFragment extends Fragment {
             //el fragment que va a mostrar
             switch (position){
                 case 0:
-                    return new GestionarClienteFragment();
+                    return new GestionarClienteFragment(userSesion);
                 case 1:
-                    return new GestionarOrganizadorFragment();
+                    return new GestionarOrganizadorFragment(userSesion);
                 case 2:
-                    return new GestionarAdministradorFragment();
+                    return new GestionarAdministradorFragment(userSesion);
                 case 3:
-                    return new GestionarAdminOrgFragment();
+                    return new GestionarAdminOrgFragment(userSesion);
             }
             return null;
         }

@@ -58,6 +58,7 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
                 //creamos el bundle para pasar el evento
                 Intent intent = new Intent(context, EventoActivity.class);
                 intent.putExtra("evento",e);
+                intent.putExtra("userSesion",userSesion);
                 context.startActivity(intent);
             }
         });

@@ -19,10 +19,16 @@ import java.util.ArrayList;
 
 public class GestionarOrganizadorFragment extends Fragment {
     private ListView list_gestionarUsuarios;
+    private Usuario userSesion;
+
+    public GestionarOrganizadorFragment(Usuario userSesion){
+        this.userSesion = userSesion;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,8 +46,6 @@ public class GestionarOrganizadorFragment extends Fragment {
         addListView(view);//añadimos el listView
         addNewUser(view); //boton añadir nuevo usuario
     }
-
-
     private void addNewUser(View view) {
         FloatingActionButton buttonNewUser = (FloatingActionButton) view.findViewById(R.id.buttonNewUser);
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
@@ -50,6 +54,7 @@ public class GestionarOrganizadorFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 Usuario user = null;
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         });
@@ -71,6 +76,7 @@ public class GestionarOrganizadorFragment extends Fragment {
                 Usuario user = listUser.get(position);
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         };

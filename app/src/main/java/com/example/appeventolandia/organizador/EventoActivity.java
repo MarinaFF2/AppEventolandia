@@ -37,6 +37,7 @@ public class EventoActivity extends AppCompatActivity {
     private Evento evento;
     private ArrayList<Usuario> listUserOrganizador;
     private ArrayList<Usuario> listUserCliente;
+    private Usuario userSesion = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +46,17 @@ public class EventoActivity extends AppCompatActivity {
 
         addMenu(); //añadimos menu
         addData();
+        addUserSession();
         addEventSpinner();
         addFechaEvento();
         addButtonSave();
     }
-
+    private void addUserSession() {
+        userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+    }
     private void addEventSpinner() {
         //añadimos evento del spinnerOrganEvento
-     /*   spinnerOrganEvento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerOrganEvento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Usuario user  = listUserOrganizador.get(position);
@@ -83,7 +87,6 @@ public class EventoActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-      */
     }
     private void addMenu() {
         //añadimos el action bar a la activity
@@ -100,12 +103,10 @@ public class EventoActivity extends AppCompatActivity {
         buttonSave.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                saveEvento();
+
+
             }
         });
-    }
-    private void saveEvento() {
-
     }
     private void addData() {
         //hacemos la conexión con la BBDD
@@ -186,7 +187,7 @@ public class EventoActivity extends AppCompatActivity {
         dpd.show();
     }
     private void addSpinnerOrganizador() {
-        listUserOrganizador = connection.listUsuariosByOrganizador();
+        listUserOrganizador = connection.spinnerByOrganizador();
         // Cree un ArrayAdapter usando un string array y un spinner layout predeterminado
         ArrayAdapter<Usuario> adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_spinner_item,listUserOrganizador);
         // especificamos el tipo de layout que queremos mostrar en el spinner

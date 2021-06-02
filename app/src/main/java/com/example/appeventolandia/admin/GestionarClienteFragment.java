@@ -24,6 +24,11 @@ import java.util.ArrayList;
 
 public class GestionarClienteFragment extends Fragment {
     private ListView list_gestionarUsuarios;
+    private Usuario userSesion;
+
+    public GestionarClienteFragment(Usuario userSesion){
+        this.userSesion = userSesion;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,7 @@ public class GestionarClienteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gestionar_cliente, container, false);
+
     }
 
     @Override
@@ -48,7 +54,6 @@ public class GestionarClienteFragment extends Fragment {
         addNewUser(view); //boton añadir nuevo usuario
     }
 
-
     private void addNewUser(View view) {
         FloatingActionButton buttonNewUser = (FloatingActionButton) view.findViewById(R.id.buttonNewUser);
         buttonNewUser.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +62,7 @@ public class GestionarClienteFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 Usuario user = null;
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         });
@@ -78,6 +84,7 @@ public class GestionarClienteFragment extends Fragment {
                 Usuario user = listUser.get(position);
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         };

@@ -77,6 +77,18 @@
             android:textAlignment="center"
             android:hint="@string/hint_pwd_perfil"
             android:inputType="textPassword" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatCamaraPerfil"
+            style="@android:style/Widget.Material.ImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:backgroundTint="#EE3C3737"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_camera"
+            app:backgroundTint="#EE3C3737"
+            app:rippleColor="#FFFFFF" />
     </LinearLayout>
 
     <Button

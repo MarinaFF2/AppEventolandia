@@ -13,6 +13,8 @@ import com.example.appeventolandia.entidades.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
+
 public class ConexionBBDD extends SQLiteOpenHelper {
     //declaro la bariable para poder interactuar con la bbdd
     private SQLiteDatabase db;
@@ -61,9 +63,9 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         String[] parametros={id+""};
         int result = db.delete(Utilidades.TABLA_USER,Utilidades.CAMPO_ID_USER+"=?",parametros);
         if(result > 0) {
-            Toast.makeText(context, "Delete the user", Toast.LENGTH_SHORT).show();
+            Toasty.success(context, "Delete the user", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Error deleted the user", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "Error deleted the user", Toast.LENGTH_SHORT).show();
         }
         db.close();
     }
@@ -80,14 +82,14 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         int result = db.update(Utilidades.TABLA_USER,values,Utilidades.CAMPO_ID_USER+"=?",parametros);
         if(result > 0) {
-            Toast.makeText(context, "Updated the user", Toast.LENGTH_SHORT).show();
+            Toasty.success(context, "Updated the user", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Error updated the user", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "Error updated the user", Toast.LENGTH_SHORT).show();
         }
 
         db.close();
     }
-    public void insertUser(Usuario user, Activity activity) {
+    public void insertUser(Usuario user) {
         //antes de insertar comprobamos que el correo no se repìta
         if(existUserByCorreo(user.getCorreo())==null){
             db = this.getWritableDatabase();//declaro la bariable para poder interactuar con la bbdd
@@ -104,13 +106,13 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             //si idResult es igual 1 ha tenido exito
             Long result = db.insert(Utilidades.TABLA_USER, Utilidades.CAMPO_ID_USER, values);
             if(result > 0) {
-                Toast.makeText(activity, "Inserted the user", Toast.LENGTH_SHORT).show();
+                Toasty.success(context, "Inserted the user", Toast.LENGTH_SHORT).show();
             }else{
-                Toast.makeText(activity, "Error inserted the user", Toast.LENGTH_SHORT).show();
+                Toasty.error(context, "Error inserted the user", Toast.LENGTH_SHORT).show();
             }
             db.close();
         }else{
-            Toast.makeText(context,"Ya existe un usuario con este correo ",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Ya existe un usuario con este correo ",Toast.LENGTH_SHORT).show();
         }
     }
     public Usuario existUserByCorreoPwd(String correo,String pwd){
@@ -127,7 +129,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setCorreo(cursor.getString(2));
             user.setPwd(cursor.getString(3));
             user.setIdRol(cursor.getInt(4));
-            user.setFoto(cursor.getInt(5));
+            user.setFoto(cursor.getString(5));
             cursor.close();
         }catch (Exception e){
             user = null;
@@ -151,10 +153,10 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setCorreo(cursor.getString(2));
             user.setPwd(cursor.getString(3));
             user.setIdRol(cursor.getInt(4));
-            user.setFoto(cursor.getInt(5));
+            user.setFoto(cursor.getString(5));
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
             user = null;
         }
         db.close();
@@ -177,10 +179,10 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setCorreo(cursor.getString(2));
             user.setPwd(cursor.getString(3));
             user.setIdRol(cursor.getInt(4));
-            user.setFoto(cursor.getInt(5));
+            user.setFoto(cursor.getString(5));
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
             user = null;
         }
         db.close();
@@ -207,7 +209,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setCorreo(cursor.getString(2));
             user.setPwd(cursor.getString(3));
             user.setIdRol(cursor.getInt(4));
-            user.setFoto(cursor.getInt(5));
+            user.setFoto(cursor.getString(5));
 
             listUsers.add(user);
         }
@@ -224,7 +226,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         db = getReadableDatabase();
 
         try {
-                Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 2 OR "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
+                Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 2",null);
 
             if (cursor.moveToFirst()){
                 do {
@@ -234,7 +236,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
                     user.setCorreo(cursor.getString(2));
                     user.setPwd(cursor.getString(3));
                     user.setIdRol(cursor.getInt(4));
-                    user.setFoto(cursor.getInt(5));
+                    user.setFoto(cursor.getString(5));
 
                     listUsers.add(user);
 
@@ -242,7 +244,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
@@ -265,7 +267,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
                     user.setCorreo(cursor.getString(2));
                     user.setPwd(cursor.getString(3));
                     user.setIdRol(cursor.getInt(4));
-                    user.setFoto(cursor.getInt(5));
+                    user.setFoto(cursor.getString(5));
 
                     listUsers.add(user);
 
@@ -273,7 +275,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
@@ -296,7 +298,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
                     user.setCorreo(cursor.getString(2));
                     user.setPwd(cursor.getString(3));
                     user.setIdRol(cursor.getInt(4));
-                    user.setFoto(cursor.getInt(5));
+                    user.setFoto(cursor.getString(5));
 
                     listUsers.add(user);
 
@@ -304,13 +306,44 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
         return listUsers;
     }
     public ArrayList<Usuario> listUsuariosByOrganizador() {
+        //SACA TODAS LOS Usuario
+        ArrayList<Usuario> listUsers  = new ArrayList<>();
+
+        db = getReadableDatabase();
+
+        try {
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1",null);
+
+            if (cursor.moveToFirst()){
+                do {
+                    Usuario user = new Usuario();
+                    user.setId(cursor.getInt(0));
+                    user.setNombreApellidos(cursor.getString(1));
+                    user.setCorreo(cursor.getString(2));
+                    user.setPwd(cursor.getString(3));
+                    user.setIdRol(cursor.getInt(4));
+                    user.setFoto(cursor.getString(5));
+
+                    listUsers.add(user);
+
+                } while(cursor.moveToNext());
+            }
+            cursor.close();
+        }catch (Exception e){
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+        }
+        db.close();
+
+        return listUsers;
+    }
+    public ArrayList<Usuario> spinnerByOrganizador() {
         //SACA TODAS LOS Usuario
         ArrayList<Usuario> listUsers  = new ArrayList<>();
 
@@ -327,7 +360,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
                     user.setCorreo(cursor.getString(2));
                     user.setPwd(cursor.getString(3));
                     user.setIdRol(cursor.getInt(4));
-                    user.setFoto(cursor.getInt(5));
+                    user.setFoto(cursor.getString(5));
 
                     listUsers.add(user);
 
@@ -335,7 +368,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the user",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
@@ -364,13 +397,13 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             //si idResult es igual 1 ha tenido exito
             Long result = db.insert(Utilidades.TABLA_EVENT, Utilidades.CAMPO_ID_EVENT, values);
             if (result > 0) {
-                Toast.makeText(activity, "Inserted the event", Toast.LENGTH_SHORT).show();
+                Toasty.success(activity, "Inserted the event", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(activity, "Error inserted the event", Toast.LENGTH_SHORT).show();
+                Toasty.error(activity, "Error inserted the event", Toast.LENGTH_SHORT).show();
             }
             db.close();
         }else{
-            Toast.makeText(context,"Ya existe un evento con este cliente, organizador en esa fecha ",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Ya existe un evento con este cliente, organizador en esa fecha ",Toast.LENGTH_SHORT).show();
         }
     }
     public void deleteEvento(int id){
@@ -384,9 +417,9 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         int result = db.delete(Utilidades.TABLA_EVENT,Utilidades.CAMPO_ID_EVENT+"=?",parametros);
         if(result > 0) {
-            Toast.makeText(context, "Delete the event", Toast.LENGTH_SHORT).show();
+            Toasty.success(context, "Delete the event", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Error deleted the event", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "Error deleted the event", Toast.LENGTH_SHORT).show();
         }
         db.close();
     }
@@ -408,9 +441,9 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         int result = db.update(Utilidades.TABLA_USER,values,Utilidades.CAMPO_ID_USER+"=?",parametros);
         if(result > 0) {
-            Toast.makeText(context, "Updated the event", Toast.LENGTH_SHORT).show();
+            Toasty.success(context, "Updated the event", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "Error updated the event", Toast.LENGTH_SHORT).show();
+            Toasty.error(context, "Error updated the event", Toast.LENGTH_SHORT).show();
         }
 
         db.close();
@@ -436,7 +469,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             event.setPrecio(cursor.getDouble(9));
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the event",Toast.LENGTH_SHORT).show();
+             Toasty.info(context,"Not existed the event",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
@@ -473,7 +506,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the event",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the event",Toast.LENGTH_SHORT).show();
         }
         db.close();
 
@@ -509,7 +542,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e){
-            Toast.makeText(context,"Not existed the event",Toast.LENGTH_SHORT).show();
+            Toasty.info(context,"Not existed the event",Toast.LENGTH_SHORT).show();
         }
         db.close();
 

@@ -15,6 +15,8 @@ import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
 import com.example.appeventolandia.organizador.MainOrganizadorActivity;
 
+import es.dmoral.toasty.Toasty;
+
 public class InicioSesionActivity extends AppCompatActivity {
 
     //declaramos la bbdd
@@ -63,8 +65,9 @@ public class InicioSesionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //comprobamos que los editText no estén vacios
-                if(editView_correo_inicioSesion.getText().toString() != null && editView_pwd_inicioSesion.getText().toString() != null){
-                    Usuario user = connection.existUserByCorreoPwd(editView_correo_inicioSesion.getText().toString(),editView_pwd_inicioSesion.getText().toString());
+                if(editView_correo_inicioSesion.getText().toString() != null && editView_pwd_inicioSesion.getText().toString() != null &&
+                editView_correo_inicioSesion.getText().toString() != "" && editView_pwd_inicioSesion.getText().toString() != ""){
+                    Usuario user = connection.existUserByCorreoPwd(editView_correo_inicioSesion.getText().toString(),Usuario.codificaciónSHA512(editView_pwd_inicioSesion.getText().toString()));
 
                     if(user != null) {//indica que el usuario existe en la BBDD con ese correo y esa contraseña
                         //nos redirigimos a la bienvenida del usuario
@@ -86,10 +89,10 @@ public class InicioSesionActivity extends AppCompatActivity {
                         intent.putExtra("userSesion", user); //guardamos el usuario para saber quien es
                         startActivity(intent);
                     }else{//indica que el usuario no existe en la BBDD con ese correo y esa contraseña
-                        Toast.makeText(InicioSesionActivity.this,"Error al iniciar sesión. ¡Vuelve a probar!",Toast.LENGTH_SHORT).show();
+                        Toasty.error(InicioSesionActivity.this,"Error al iniciar sesión. ¡Vuelve a probar!",Toast.LENGTH_SHORT).show();
                     }
                 }else{ //si están vacíos se envía un mensaje indicandolo
-                    Toast.makeText(InicioSesionActivity.this,"¡Tienes que rellenar los dos campos!",Toast.LENGTH_SHORT).show();
+                    Toasty.info(InicioSesionActivity.this, "¡Tienes que rellenar los campos!", Toast.LENGTH_SHORT, true).show();
                 }
             }
         });

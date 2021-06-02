@@ -2,9 +2,13 @@ package com.example.appeventolandia.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,9 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+import com.example.appeventolandia.InicioSesionActivity;
+import com.example.appeventolandia.MainAdminOrganizadorActivity;
 import com.example.appeventolandia.R;
+import com.example.appeventolandia.cliente.MainClienteActivity;
 import com.example.appeventolandia.entidades.Usuario;
+import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
+import com.example.appeventolandia.organizador.MainOrganizadorActivity;
+
+import es.dmoral.toasty.Toasty;
 
 public class UsuarioActivity extends AppCompatActivity {
 
@@ -25,7 +38,9 @@ public class UsuarioActivity extends AppCompatActivity {
     private EditText edit_pwd_usuario;
     private Spinner spinner_rol_usuario;
 
-    private Usuario user;
+    private boolean salModificar;
+    private Usuario user; //usuario que se trata en la activity
+    private Usuario userSesion = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +48,7 @@ public class UsuarioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_usuario);
 
         addMenu(); //añadimos menu
+        addUserSession();
         addData();
         addEventSpinner();
         addButtonSave();
@@ -70,10 +86,55 @@ public class UsuarioActivity extends AppCompatActivity {
         buttonSaveUsuarioActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //comprobamos que todos los campos están seleccionados
+                if(edit_nombre_usuario.getText().toString()!=null && edit_correo_usuario.getText().toString()!=null){
+
+                    //hacemos la conexión con la BBDD
+                    ConexionBBDD connection = new ConexionBBDD(v.getContext(),"bd_events",null,2);
+
+                    if(salModificar){//si salModificar es true, significa que vamos a modificar un usuario
+                        user.setNombreApellidos(edit_nombre_usuario.getText().toString());
+                        user.setCorreo(edit_correo_usuario.getText().toString());
+                        //comprobamos que quiera cambiar la comtraseña
+                        if(edit_pwd_usuario.getText().toString()!=null) {
+                            //guardamos la nueva contraseña
+                            user.setPwd(Usuario.codificaciónSHA512(edit_pwd_usuario.getText().toString()));
+                        }
+
+                        connection.updateUser(user);
+
+                    }else{//si salModificar es false, significa que vamos a añadir un usuario
+                        user.setNombreApellidos(edit_nombre_usuario.getText().toString());
+                        user.setCorreo(edit_correo_usuario.getText().toString());
+                        user.setPwd(Usuario.codificaciónSHA512(edit_pwd_usuario.getText().toString()));
+
+                        connection.insertUser(user);
+                    }
+
+                    //nos redirigimos al usuario
+                    Intent intent = null;
+                    switch (userSesion.getIdRol()){
+                        case 2:// Bienvenida administrador
+                            intent = new Intent(UsuarioActivity.this, MainAdminActivity.class);
+                            break;
+                        case 3:// Bienvenida admin-organizador
+                            intent = new Intent(UsuarioActivity.this, MainAdminOrganizadorActivity.class);
+                            break;
+                    }
+                    intent.putExtra("userSesion", user); //guardamos el usuario para saber quien es
+                    startActivity(intent);
+
+                }else{//mostramos mensaje emergente
+                    Toasty.info(v.getContext(), "Rellene todos los campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
-
+    private void addUserSession() {
+        if((Usuario) getIntent().getExtras().getSerializable("userSesion") != null) {
+            userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        }
+    }
     private void addData() {
         title_usuario_activity = (TextView) findViewById(R.id.title_usuario_activity);
         text_value_id_usuario = (EditText) findViewById(R.id.text_value_id_usuario);
@@ -95,11 +156,12 @@ public class UsuarioActivity extends AppCompatActivity {
             text_value_id_usuario.setText(user.getId()+"");
             edit_nombre_usuario.setText(user.getNombreApellidos());
             edit_correo_usuario.setText(user.getCorreo());
-            edit_pwd_usuario.setText(user.getPwd());
             spinner_rol_usuario.setSelection(user.getIdRol());
+            salModificar = true;
         }else{
             user = new Usuario();
             title_usuario_activity.setText(R.string.title_usuario_aniadir);
+            salModificar = false;
         }
     }
     @Override

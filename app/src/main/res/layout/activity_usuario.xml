@@ -120,6 +120,7 @@
         android:layout_gravity="end"
         android:background="@color/colorPrimary"
         android:text="@string/buttonSave"
+        android:textColor="@color/text_Icons"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

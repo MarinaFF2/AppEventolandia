@@ -19,6 +19,11 @@ import java.util.ArrayList;
 
 public class GestionarAdministradorFragment extends Fragment {
     private ListView list_gestionarUsuarios;
+    private Usuario userSesion;
+
+    public GestionarAdministradorFragment(Usuario userSesion){
+        this.userSesion = userSesion;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,7 @@ public class GestionarAdministradorFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 Usuario user = null;
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         });
@@ -71,6 +77,7 @@ public class GestionarAdministradorFragment extends Fragment {
                 Usuario user = listUser.get(position);
                 Intent intent = new Intent(view.getContext(),UsuarioActivity.class);
                 intent.putExtra("usuario",user);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         };
