@@ -3,7 +3,6 @@ package com.example.appeventolandia.admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,39 +11,53 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
-import com.example.appeventolandia.InicioSesionActivity;
+import com.example.appeventolandia.comun.InicioSesionActivity;
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragmentsComun.PerfilFragment;
-import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
+import com.example.appeventolandia.comun.PerfilFragment;
+import com.example.appeventolandia.comun.WelcomeFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainAdminActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
-    private Usuario userSesion = null;
-    private ConexionBBDD connection;
+    //variables necesarias para la clase
+    private Usuario userSesion;
     private Fragment fragment;
 
+    /**
+     * metodo para crear la actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_admin);
 
-        addUserSesion();//recogemos la userSesion
+        addUserSession();//recogemos la userSesion
         addMenu(); //añadimos menu
         addFragment();//añadimos fragment
         addNavigationView(); // añadimos navigation view
     }
 
-    private void addUserSesion() {
+    /**
+     * metodo para guardar el usuario de la sesion
+     */
+    private void addUserSession() {
+        //guardamos el usario
         userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
 
+    /**
+     * metodo para añadir el NavigationView
+     */
     private void addNavigationView() {
+        //añadimos el NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * metodo para añadimos el fragment
+     */
     private void addFragment() {
         //mostramos el fragment
         fragment = new WelcomeFragment();
@@ -53,6 +66,9 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         fragmentTransaction.commit();
     }
 
+    /**
+     * metodo para añadir el menu
+     */
     private void addMenu() {
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,6 +84,11 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
         drawerToggle.syncState(); //sincronizamos
     }
 
+    /**
+     * metodo para recoger el tiem selecionado
+     * @param item
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -89,6 +110,7 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
                 break;
         }
 
+        //si hay fragment rellenamos el fragment
         if(fragment != null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment,fragment);
@@ -106,6 +128,7 @@ public class MainAdminActivity extends AppCompatActivity  implements NavigationV
 
         return true;
     }
+
     public void onBackPressed(){
         DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_layout);
         if(drawer_layout.isDrawerOpen(GravityCompat.START)){

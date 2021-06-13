@@ -1,4 +1,4 @@
-package com.example.appeventolandia.fragmentsComun;
+package com.example.appeventolandia.comun;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsFragment extends Fragment{
+    //variables necesarias para la clase
     private double latitud;
     private double longitud;
     private String nombreEvento;
@@ -36,6 +37,7 @@ public class MapsFragment extends Fragment{
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            //creamos la nueva marca con la ubicacion
             LatLng ubicacion = new LatLng(latitud, longitud);
             googleMap.addMarker(new MarkerOptions().position(ubicacion).title("Marcada la ubicación del evento: "+ nombreEvento));
 
@@ -45,9 +47,16 @@ public class MapsFragment extends Fragment{
             uiSettings.setTiltGesturesEnabled(true);
             uiSettings.setScrollGesturesEnabled(true);
             uiSettings.setZoomGesturesEnabled(true);
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion,20));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion,20)); //creamos nueva ubicacion
         }
     };
+    /**
+     * metodo para relacionar el fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,15 +64,21 @@ public class MapsFragment extends Fragment{
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_maps, container, false);
     }
-
+    /**
+     * metodo para crear la vista
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
 
+        //recogemos los parametros que nos han pasado
         Bundle data = getArguments();
         if(data !=null) {
+            //los guardamos
             latitud = data.getDouble("latitud");
             longitud = data.getDouble("longitud");
             nombreEvento = data.getString("nombreEvento");

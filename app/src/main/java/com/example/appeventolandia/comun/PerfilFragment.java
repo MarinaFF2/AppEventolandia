@@ -1,4 +1,4 @@
-package com.example.appeventolandia.fragmentsComun;
+package com.example.appeventolandia.comun;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +29,7 @@ import java.io.IOException;
 import es.dmoral.toasty.Toasty;
 
 public class PerfilFragment extends Fragment {
+    //variables de los elementos
     private CircularImageView circularImageView;
     private EditText edit_name_perfil;
     private EditText edit_email_perfil;
@@ -40,9 +41,15 @@ public class PerfilFragment extends Fragment {
     private static final int GALERIA = 1;
     private static final int CAMARA = 2;
 
+    //variables necesarias para la clase
     private Usuario userSesion;
     private String b64;
 
+    /**
+     * metdo para crear la vista
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,15 +68,23 @@ public class PerfilFragment extends Fragment {
         eventButtonSave();//añadimos la opción del evento
     }
 
+    /**
+     * metodo para añadir evento al float
+     */
     private void addEventFloat() {
+        //llamamos al evento
         floatCamaraPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //mostramos dialogo para tratar la foto
                 mostrarDialogoFoto();
             }
         });
     }
 
+    /**
+     * metodo para guardar el usuario de la sesion
+     */
     private void addUserSesion(){
         //recogemos la cookie del usuario
         Bundle data = this.getArguments();
@@ -78,6 +93,9 @@ public class PerfilFragment extends Fragment {
         }
     }
 
+    /**
+     * metodo para rellenar los campos
+     */
     private void addDataPerfil() {
         //mostramos el nombre y apellidos del usuario
         edit_name_perfil.setText(userSesion.getNombreApellidos());
@@ -85,6 +103,7 @@ public class PerfilFragment extends Fragment {
         edit_email_perfil.setText(userSesion.getCorreo());
         //mostramos la imagen del usuario
         b64 = userSesion.getFoto();
+        //si hay foto la colocamos
         if(b64!=""){
             circularImageView.setImageBitmap(Usuario.gestionarImg(b64));
         }
@@ -131,9 +150,15 @@ public class PerfilFragment extends Fragment {
         startActivityForResult(intent, CAMARA);
     }
 
+    /**
+     * metodo para tratar lo que devuelve los intent para tratar la foto
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        //si se eligió la galeria
         if (requestCode == GALERIA) {
             if (data != null) {
                 Uri contentURI = data.getData();
@@ -145,7 +170,7 @@ public class PerfilFragment extends Fragment {
                     Snackbar.make(getView(), "Fallo en la galería", Snackbar.LENGTH_LONG).show();
                 }
             }
-        } else if (requestCode == CAMARA) {
+        } else if (requestCode == CAMARA) { //si se eligió la camara
             Bitmap thumbnail = null;
             try {
                 thumbnail = (Bitmap) data.getExtras().get("data");
@@ -156,6 +181,9 @@ public class PerfilFragment extends Fragment {
             }
         }
     }
+    /**
+     * metodo para actualizar el perfil
+     */
     private void eventButtonSave() {
         button_save_perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,11 +211,22 @@ public class PerfilFragment extends Fragment {
         });
     }
 
+    /**
+     * metodo para relacionar la vista con el fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_perfil, container, false);
     }
+
+    /**
+     * metodo para porner la foto de perfil redonda
+     */
     private void addCircularImageView() {
         // Set Color
         circularImageView.setCircleColor(Color.WHITE);

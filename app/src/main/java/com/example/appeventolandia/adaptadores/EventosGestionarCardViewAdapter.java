@@ -18,29 +18,42 @@ import com.example.appeventolandia.organizador.EventoActivity;
 import java.util.ArrayList;
 
 public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<EventosGestionarCardViewAdapter.EventoViewHolder>{
-
+    //variables necesarias para la clase
     private ArrayList<Evento> listEvents;
     private Context context;
     private ConexionBBDD connection;
     private Evento e;
     private Usuario userSesion;
-    private int size;
-
-    public EventosGestionarCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context,int size) {
+    /**
+     * constructor
+     * @param listEvents
+     * @param userSesion
+     * @param context
+     */
+    public EventosGestionarCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context) {
+        //rellenamos las variables
         connection = new ConexionBBDD(context,"bd_events",null,2);
         this.listEvents = listEvents;
         this.context = context;
         this.userSesion = userSesion;
-        this.size = size;
     }
-
+    /**
+     * creamos el carview
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public EventoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //enlazamos la clase con el layout
         return new EventoViewHolder((CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_evento_gestionar,parent,false));
     }
-
+    /**
+     * para trabajar el cardview
+     * @param eventoViewHolder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull EventoViewHolder eventoViewHolder, int position) {
         //conseguimos el evento de la posición en la que estamos
@@ -67,13 +80,20 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
             }
         });
     }
-
+    /**
+     * metodo para saber el total de items
+     * @return
+     */
     @Override
     public int getItemCount() {
-        return size;
+        return listEvents.size();
     }
 
+    /**
+     * clase interna para tratar del cardview
+     */
     public static class EventoViewHolder extends RecyclerView.ViewHolder {
+        //variables de los elementos
         private ImageView ImgcvTipoEventoGestionar;
         private TextView tvcvFechaEventoGestionar;
         private TextView tvcvNombreEventoGestionar;
@@ -83,6 +103,7 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
         public EventoViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            //declaramos las variables de los elementos
             cvEventoGestionar = (CardView) itemView.findViewById(R.id.cvEventoGestionar);
             ImgcvTipoEventoGestionar = (ImageView) itemView.findViewById(R.id.ImgcvTipoEventoGestionar);
             tvcvFechaEventoGestionar = (TextView) itemView.findViewById(R.id.tvcvFechaEventoGestionar);

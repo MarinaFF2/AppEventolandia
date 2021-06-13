@@ -1,4 +1,4 @@
-package com.example.appeventolandia;
+package com.example.appeventolandia.comun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+import com.example.appeventolandia.R;
 import com.example.appeventolandia.admin.MainAdminActivity;
 import com.example.appeventolandia.cliente.MainClienteActivity;
 import com.example.appeventolandia.entidades.Evento;
@@ -18,10 +19,13 @@ import com.example.appeventolandia.organizador.MainOrganizadorActivity;
 import es.dmoral.toasty.Toasty;
 
 public class InicioSesionActivity extends AppCompatActivity {
-
     //declaramos la bbdd
     private ConexionBBDD connection;
 
+    /**
+     * metodo para crear la actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +34,15 @@ public class InicioSesionActivity extends AppCompatActivity {
         //hacemos la conexión con la BBDD
         connection = new ConexionBBDD(InicioSesionActivity.this,"bd_events",null,2);
 
-        addDate();//añadimos datos a la BBDD si no hay
+        addData();//añadimos datos a la BBDD si no hay
         addMenu(); //añadimos menu
         buttonEvent();//añadimos el evento del botón para iniciar sesión
     }
-    private void addDate() {
+
+    /**
+     * metodo para añadir los datos la primera vez que se ejecuta
+     */
+    private void addData() {
         //comprobamos si hay usuarios en la BBDD,
         //sino lanzamos los insert para insertar usuarios para iniciar la app con datos
        if(connection.listUsers()==null){
@@ -46,6 +54,10 @@ public class InicioSesionActivity extends AppCompatActivity {
             Evento.insertEventoIniciales(InicioSesionActivity.this);
         }
     }
+
+    /**
+     * metodo para añadir el menu
+     */
     private void addMenu() {
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -54,6 +66,9 @@ public class InicioSesionActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.drawable.eventolandia);
     }
 
+    /**
+     * metodo para iniciar sesion
+     */
     private void buttonEvent() {
         //declamos los editText y el boton del layout activity_inicio_sesion.xml
         EditText editView_correo_inicioSesion = (EditText) findViewById(R.id.editView_correo_inicioSesion);

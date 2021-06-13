@@ -10,21 +10,30 @@ import android.widget.TextView;
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragmentsComun.MapsFragment;
+import com.example.appeventolandia.comun.MapsFragment;
 
 public class VisualizarEventoActivity extends AppCompatActivity {
+    //variables necesarias para la clase
     private Usuario userSesion;
     private Evento eventSesion;
 
+    /**
+     * metodo para crear la actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_evento);
 
-        addMenu();
-        addSesion();
-        addData();
+        addMenu();//añadimos menu
+        addSesion();//guardamos la sesion
+        addData(); //rellenamos los campos
     }
+
+    /**
+     * metodo para añadir el menu
+     */
     private void addMenu() {
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,13 +43,21 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+    /**
+     * metodo para guardar la sesion
+     */
     private void addSesion(){
-        //recogemos la cookie del usuario
+        //recogemos la cookie del usuario y del evento
         userSesion = (Usuario) getIntent().getSerializableExtra("userSesion");
         eventSesion = (Evento) getIntent().getSerializableExtra("eventSesion");
-
     }
+
+    /**
+     * metodo para rellenar los campos
+     */
     private void addData() {
+        //declaramos los elementos
         TextView txNombreShowEvento = (TextView) findViewById(R.id.txNombreShowEvento);
         TextView txDescripcionShowEvento = (TextView) findViewById(R.id.txDescripcionShowEvento);
         TextView txTipoShowEvento = (TextView) findViewById(R.id.txTipoShowEvento);
@@ -49,6 +66,7 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         TextView txDuracionShowEvento = (TextView) findViewById(R.id.txDuracionShowEvento);
         TextView txPrecioShowEvento = (TextView) findViewById(R.id.txPrecioShowEvento);
 
+        //rellenamos los elementos
         txNombreShowEvento.setText(eventSesion.getNombre());
         txDescripcionShowEvento.setText(eventSesion.getDescripcion());
         txTipoShowEvento.setText(eventSesion.getTipoEvento());
@@ -56,13 +74,19 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         txFechaShowEvento.setText(eventSesion.getFecha());
         txDuracionShowEvento.setText(eventSesion.getDuracion()+"h");
         txPrecioShowEvento.setText(eventSesion.getPrecio()+"€");
-
         String[] ubicacion = eventSesion.getUbicacion().split(",");
         double latitud = Double.parseDouble(ubicacion[0]);
         double longitud = Double.parseDouble(ubicacion[1]);
+        //ponemos la nueva ubicacion
         addMap(latitud,longitud,txNombreShowEvento);
     }
 
+    /**
+     * metodo para poner la ubicacion en el mapa
+     * @param latitud
+     * @param longitud
+     * @param txNombreShowEvento
+     */
     private void addMap(double latitud, double longitud,TextView txNombreShowEvento) {
         //mostramos el fragment
         Fragment fragment = new MapsFragment();

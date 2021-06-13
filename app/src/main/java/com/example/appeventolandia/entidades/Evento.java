@@ -4,13 +4,8 @@ import android.app.Activity;
 import android.graphics.Color;
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
 import com.example.appeventolandia.R;
-
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Evento  implements Serializable {
     /***Atributos****/
@@ -29,18 +24,6 @@ public class Evento  implements Serializable {
     public Evento() {
     }
     public Evento(String nombre, String descripcion, String tipoEvento, int idCliente, int idOrganizador, String ubicacion, String fecha, String duracion, double precio) {
-        this.ubicacion = ubicacion;
-        this.fecha = fecha;
-        this.duracion = duracion;
-        this.idCliente = idCliente;
-        this.idOrganizador = idOrganizador;
-        this.precio = precio;
-        this.descripcion = descripcion;
-        this.nombre = nombre;
-        this.tipoEvento = tipoEvento;
-    }
-    public Evento(int id, String nombre, String descripcion, String tipoEvento, int idCliente, int idOrganizador, String ubicacion, String fecha, String duracion, double precio) {
-        this.id = id;
         this.ubicacion = ubicacion;
         this.fecha = fecha;
         this.duracion = duracion;
@@ -129,6 +112,8 @@ public class Evento  implements Serializable {
         this.tipoEvento = tipoEvento;
     }
 
+    /***Metodos de la clase****/
+    /** metodo para identificar el tipo de evento a partir de una cadena para el spinner*/
     public static int tipoEventoByInt(String sTipoEvento){
         int nTipoEvento = -1;
         switch (sTipoEvento){
@@ -153,6 +138,7 @@ public class Evento  implements Serializable {
         }
         return nTipoEvento;
     }
+    /** Metodo para poner color al cardview según el tipo de evento*/
     public int getColor(){
         int color = 0;
         switch (this.tipoEvento){
@@ -177,6 +163,7 @@ public class Evento  implements Serializable {
         }
         return color;
     }
+    /** Metodo para poner la foto al cardview según el tipo de evento*/
     public int getFoto(){
         int foto = 0;
         switch (this.tipoEvento){
@@ -201,8 +188,10 @@ public class Evento  implements Serializable {
         }
         return foto;
     }
-    /***Metodos de la clase****/
+
+    /**metodo para crear el arraylist de los eventos por defecto e insertar eventos*/
     public static void insertEventoIniciales(Activity activity) {
+        //creamos el arraylist de eventos por defecto
         String ubicacion ="38.97876, -3.92874";
         ArrayList<Evento> listEvent = new ArrayList<>();
         listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,8,ubicacion,"10/06/2021","5",150.50));
@@ -213,26 +202,12 @@ public class Evento  implements Serializable {
         listEvent.add(new Evento("Boda Gomez","Es un Boda en la tarde, va a haber banquete, cocteles y entrega de regalos","Boda",1,6,ubicacion,"25/06/2021","5",150.50));
         listEvent.add(new Evento("Compromiso Vazquez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",5,8,ubicacion,"10/06/2021","5",150.50));
         listEvent.add(new Evento("Compromiso Gomez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",1,8,ubicacion,"15/06/2021","5",150.50));
-
+        //hacemos la conexion a la bbdd
         ConexionBBDD connection = new ConexionBBDD(activity,"bd_events",null,2);
+        //recorremos el arraylist
         for (Evento evento:listEvent) {
+            //realizamos la insercion del evento
             connection.insertEvento(evento);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "Evento{" +
-                "id=" + id +
-                ", ubicacion='" + ubicacion + '\'' +
-                ", fecha='" + fecha + '\'' +
-                ", duracion='" + duracion + '\'' +
-                ", idCliente=" + idCliente +
-                ", idOrganizador=" + idOrganizador +
-                ", precio=" + precio +
-                ", descripcion='" + descripcion + '\'' +
-                ", nombre='" + nombre + '\'' +
-                ", tipoEvento='" + tipoEvento + '\'' +
-                '}';
     }
 }

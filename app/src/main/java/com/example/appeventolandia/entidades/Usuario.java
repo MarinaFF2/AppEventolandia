@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
-
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
-import com.example.appeventolandia.R;
-
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.security.MessageDigest;
@@ -26,7 +23,7 @@ public class Usuario implements Serializable {
 
     /***Constructor****/
     public Usuario() {}
-    public Usuario( String nombreApellidos, String correo, String pwd, int idRol, String foto) {
+    public Usuario(String nombreApellidos, String correo, String pwd, int idRol, String foto) {
         this.nombreApellidos = nombreApellidos;
         this.correo = correo;
         this.pwd = pwd;
@@ -80,6 +77,7 @@ public class Usuario implements Serializable {
 
     /***Metodos de la clase****/
 
+    /**metodo para crear el arraylist de los usuarios por defecto para que poder iniciar sesión*/
     public static ArrayList<Usuario> list_user(){
         String img = "";
         String codPwd = codificaciónSHA512("1");
@@ -95,31 +93,19 @@ public class Usuario implements Serializable {
 
         return listUser;
     }
+    /**metodo para insertar los usuarios por defecto para que poder iniciar sesión*/
     public static void insertUsuarioIniciales(Activity activity){
+        //llamamos al metodo lis_user() para que no devuelva el arraylist de usuarios por defecto
         ArrayList<Usuario> listUser = list_user();
+        //hacemos la conexion a la bbdd
         ConexionBBDD connection = new ConexionBBDD(activity,"bd_events",null,2);
+        //recorremos el arraylist
         for (Usuario user : listUser) {
+            //realizamos la insercion del usuario
             connection.insertUser(user);
         }
     }
-    public String rolByID(){
-        String rol = null;
-        switch (this.idRol){
-            case 0:
-                rol = "cliente";
-                break;
-            case 1:
-                rol = "organizador";
-                break;
-            case 2:
-                rol = "administrador";
-                break;
-            case 3:
-                rol = "admin-organizador";
-                break;
-        }
-        return rol;
-    }
+    /**Metodo para identificar el rol a aprtir de una cadena para el spinner*/
     public static int rolByNombre(String rol){
         int idRol = -1;
         switch (rol){
@@ -138,6 +124,7 @@ public class Usuario implements Serializable {
         }
         return idRol;
     }
+    /**Metodo para modificar la contraseña*/
     public static String codificaciónSHA512(String contraseña){
         String pwdCodificada = null;
         try {
@@ -178,6 +165,7 @@ public class Usuario implements Serializable {
         byte[] byteArray = stream.toByteArray();
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
+    /** Metodo necesario para rellenar el listview de gestionar usuarios*/
     @Override
     public String toString() {
         return "Id=: " + id + "\n" +

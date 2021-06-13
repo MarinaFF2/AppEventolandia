@@ -42,12 +42,12 @@
             android:name=".organizador.EventoActivity"
             android:parentActivityName=".organizador.MainOrganizadorActivity" />
         <activity android:name=".organizador.MainOrganizadorActivity" />
-        <activity android:name=".MainAdminOrganizadorActivity" />
+        <activity android:name=".comun.MainAdminOrganizadorActivity" />
         <activity android:name=".admin.MainAdminActivity" />
         <activity
             android:name=".admin.UsuarioActivity"
             android:parentActivityName=".admin.MainAdminActivity" />
-        <activity android:name=".InicioSesionActivity">
+        <activity android:name=".comun.InicioSesionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

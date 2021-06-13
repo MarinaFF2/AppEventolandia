@@ -20,20 +20,30 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class GestionarEventosFragment extends Fragment {
-    private Usuario userSesion = null;
+    //variables necesarias para la clase
+    private Usuario userSesion;
     private ArrayList<Evento> listEvents;
     private RecyclerView rvListEvents;
 
+    /**
+     * llamamos al metodo onCreate
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * metodo para crear la vista
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //extendes Fragment, hay que heredarlo para que funcione
+        //declaracion del elemento
         rvListEvents = (RecyclerView) view.findViewById(R.id.rvListGestinarEvents);
 
         addUserSesion();//recogemos la userSesion
@@ -41,6 +51,10 @@ public class GestionarEventosFragment extends Fragment {
         addRecyclerView(view);//cargamos los eventos que organiza
     }
 
+    /**
+     * metodo para añadir los datos del RecyclerView
+     * @param view
+     */
     private void addRecyclerView(View view) {
         //hacemos la conexión con la BBDD
         ConexionBBDD connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
@@ -53,9 +67,14 @@ public class GestionarEventosFragment extends Fragment {
         rvListEvents.setLayoutManager(gridLayoutManager);
 
         //añado adaptador
-        EventosGestionarCardViewAdapter adapter = new EventosGestionarCardViewAdapter(listEvents,userSesion,view.getContext(),listEvents.size());
+        EventosGestionarCardViewAdapter adapter = new EventosGestionarCardViewAdapter(listEvents,userSesion,view.getContext());
         rvListEvents.setAdapter(adapter);
     }
+
+    /**
+     * metodo para añadir un nuevo evento
+     * @param view
+     */
     private void addNewEvent(View view) {
         //declaramos el boton
         FloatingActionButton buttonNewEvent = (FloatingActionButton) view.findViewById(R.id.buttonNewEvent);
@@ -73,6 +92,10 @@ public class GestionarEventosFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * metodo para recoger el usuario de la sesion
+     */
     private void addUserSesion(){
         //recogemos la cookie del usuario
         Bundle data = this.getArguments();
@@ -80,6 +103,14 @@ public class GestionarEventosFragment extends Fragment {
             userSesion = (Usuario) data.getSerializable("userSesion");
         }
     }
+
+    /**
+     * metodo para relacionar el fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

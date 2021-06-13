@@ -1,4 +1,4 @@
-package com.example.appeventolandia;
+package com.example.appeventolandia.comun;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,17 +11,21 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Usuario;
-import com.example.appeventolandia.fragmentsComun.PerfilFragment;
-import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
 import com.example.appeventolandia.admin.GestionarUsuariosFragment;
 import com.example.appeventolandia.organizador.GestionarEventosFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainAdminOrganizadorActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener {
-    private Usuario userSesion = null;
+    //variables necesarias para la clase
+    private Usuario userSesion;
     private Fragment fragment;
 
+    /**
+     * metodo para crear la actividad
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,18 +34,29 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         addMenu(); //añadimos menu
         addFragment();//añadimos fragment
         addNavigationView(); // añadimos navigation view
-        addUserSession();
+        addUserSession(); //guardamos el usuario de la sesion
     }
 
+    /**
+     * metodo para guardar el usuario de la sesion
+     */
     private void addUserSession() {
+        //guardamos el usario
         userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
     }
 
+    /**
+     * metodo para añadir el NavigationView
+     */
     private void addNavigationView() {
+        //añadimos el NavigationView
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * metodo para añadimos el fragment
+     */
     private void addFragment() {
         //mostramos el fragment
         Fragment fragment = new WelcomeFragment();
@@ -55,6 +70,9 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         fragmentTransaction.commit();
     }
 
+    /**
+     * metodo para añadir el menu
+     */
     private void addMenu() {
         //añadimos el action bar a la activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,7 +87,11 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         drawer_layout.addDrawerListener(drawerToggle); //lo añadimos al drawer layout
         drawerToggle.syncState(); //sincronizamos
     }
-
+    /**
+     * metodo para recoger el tiem selecionado
+     * @param item
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -94,6 +116,7 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
                 break;
         }
 
+        //si hay fragment rellenamos el fragment
         if(fragment != null){
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_fragment,fragment);
@@ -110,6 +133,7 @@ public class MainAdminOrganizadorActivity extends AppCompatActivity  implements 
         }
         return true;
     }
+
     public void onBackPressed(){
         DrawerLayout drawer_layout = (DrawerLayout) findViewById(R.id.drawer_admin_organizador_layout);
         if(drawer_layout.isDrawerOpen(GravityCompat.START)){

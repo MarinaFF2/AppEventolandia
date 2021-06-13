@@ -3,6 +3,7 @@ package com.example.appeventolandia.ConexionBBDD;
 public class Utilidades {
 
     /************ Usuarios **************/
+    //Declaramos los nombres de los futuros campos de la tabla usuario
     public static final String TABLA_USER="usuario";
     public static final String CAMPO_ID_USER="id1_user";
     public static final String CAMPO_NOMBRE_APELLIDOS_USER="nameLastname_user";
@@ -10,7 +11,7 @@ public class Utilidades {
     public static final String CAMPO_PWD_USER="pwd1_user";
     public static final String CAMPO_ID_ROL_USER="idRol_user";
     public static final String CAMPO_FOTO_USER="foto_user";
-
+    //Declaramos la sql para crear la tabla de usuario
     public static final String CREAR_TABLA_USER = " CREATE TABLE " +
             TABLA_USER+" ( "+CAMPO_ID_USER+" INTEGER PRIMARY KEY AUTOINCREMENT, "
             +CAMPO_NOMBRE_APELLIDOS_USER+" TEXT, "+CAMPO_CORREO_USER+" TEXT, "+
@@ -18,6 +19,7 @@ public class Utilidades {
             CAMPO_FOTO_USER+" INTEGER ); ";
 
     /************ Eventos **************/
+    //Declaramos los nombres de los futuros campos de la tabla evento
     public static final String TABLA_EVENT = "evento";
     public static final String CAMPO_ID_EVENT = "id_evento";
     public static final String CAMPO_NOMBRE_EVENT = "nombre_evento";
@@ -29,7 +31,7 @@ public class Utilidades {
     public static final String CAMPO_FECHA_EVENT = "fecha_evento";
     public static final String CAMPO_DURACION_EVENT = "duracion_evento";
     public static final String CAMPO_PRECIO_EVENT = "precio_evento";
-
+    //Declaramos la sql para crear la tabla de evento
     public static final String CREAR_TABLA_EVENT = "CREATE TABLE " +
             TABLA_EVENT+" ( "+CAMPO_ID_EVENT+" INTEGER PRIMARY KEY AUTOINCREMENT, "
             +CAMPO_NOMBRE_EVENT+" TEXT NOT NULL,"+CAMPO_DESCRIPCION_EVENT+" TEXT NOT NULL,"

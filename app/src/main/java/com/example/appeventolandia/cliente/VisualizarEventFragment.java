@@ -20,16 +20,25 @@ import com.example.appeventolandia.entidades.Usuario;
 import java.util.ArrayList;
 
 public class VisualizarEventFragment extends Fragment {
+    //variables necesarias para la clase
     private Usuario userSesion;
     private ConexionBBDD connection;
     private ArrayList<Evento> listEvents;
     private RecyclerView rvListEvents;
-
+    /**
+     * llamamos al metodo onCreate
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * metodo para crear la vista
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -44,6 +53,10 @@ public class VisualizarEventFragment extends Fragment {
         addData(view);//cargamos los eventos que organiza
     }
 
+    /**
+     * metodo para rellenar los campos
+     * @param view
+     */
     private void addData(View view) {
         //recogemos los eventos del cliente
         listEvents = connection.listEventsByCliente(userSesion.getId());
@@ -57,6 +70,9 @@ public class VisualizarEventFragment extends Fragment {
         EventosCardViewAdapter adapter = new EventosCardViewAdapter(listEvents,userSesion,view.getContext());
         rvListEvents.setAdapter(adapter);
     }
+    /**
+     * metodo para guardar el usuario de la sesion
+     */
     private void addUserSesion(){
         //recogemos la cookie del usuario
         Bundle data = this.getArguments();
@@ -64,9 +80,15 @@ public class VisualizarEventFragment extends Fragment {
             userSesion = (Usuario) data.getSerializable("userSesion");
         }
     }
+    /**
+     * metodo para relacionar el fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_visualizar_event, container, false);
     }
