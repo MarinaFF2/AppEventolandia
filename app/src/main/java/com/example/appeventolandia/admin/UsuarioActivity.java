@@ -158,12 +158,12 @@ public class UsuarioActivity extends AppCompatActivity {
                         //comprobamos si ha habido error
                         if(result > 0) {
                             //mensaje de exito
-                            Toasty.success(v.getContext(), "Updated the user", Toast.LENGTH_SHORT).show();
+                            Toasty.success(v.getContext(), "Inserted the user", Toast.LENGTH_SHORT).show();
                             //nos redirigimos al usuario
                             redireccionamiento();
                         }else{
                             //mensaje de error
-                            Toasty.error(v.getContext(), "Error updated the user", Toast.LENGTH_SHORT).show();
+                            Toasty.error(v.getContext(), "Error Inserted the user", Toast.LENGTH_SHORT).show();
                         }
                     }
 

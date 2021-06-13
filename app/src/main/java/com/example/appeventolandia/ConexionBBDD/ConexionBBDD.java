@@ -463,7 +463,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         try {
             //Consulta la tabla dada, devolviendo un cursor sobre el conjunto de resultados.
-            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1 ",null);
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1  OR  "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
             //comprobamos si hay eventos
             if (cursor.moveToFirst()){
                 //recogemos todos los eventos
@@ -505,7 +505,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         try {
             //Consulta la tabla dada, devolviendo un cursor sobre el conjunto de resultados.
-            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1  OR  "+Utilidades.CAMPO_ID_ROL_USER+" = 3",null);
+            Cursor cursor=db.rawQuery("SELECT * FROM "+Utilidades.TABLA_USER+" WHERE "+Utilidades.CAMPO_ID_ROL_USER+" = 1 ",null);
             //comprobamos si hay eventos
             if (cursor.moveToFirst()){
                 //recogemos todos los eventos
