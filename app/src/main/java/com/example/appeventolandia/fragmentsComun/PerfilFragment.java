@@ -36,7 +36,6 @@ public class PerfilFragment extends Fragment {
     private FloatingActionButton floatCamaraPerfil;
     private Button button_save_perfil;
 
-
     //Constantes
     private static final int GALERIA = 1;
     private static final int CAMARA = 2;
@@ -162,13 +161,14 @@ public class PerfilFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //comprobamos que todos los campos esten rellenos
-                if(edit_name_perfil.getText().toString()!=null && edit_email_perfil.getText().toString()!=null){
+                if(!edit_name_perfil.getText().toString().equals("") && !edit_email_perfil.getText().toString().equals("")){
                     //recogemos los nuevos valores
                     userSesion.setNombreApellidos(edit_name_perfil.getText().toString());
                     userSesion.setCorreo(edit_email_perfil.getText().toString());
+                    userSesion.setFoto(b64);
 
                     //comprobamos que quiera cambiar la comtraseña
-                    if( edit_pwd_perfil.getText().toString()!=null) {
+                    if(!edit_pwd_perfil.getText().toString().equals("")) {
                         //guardamos la nueva contraseña
                         userSesion.setPwd(Usuario.codificaciónSHA512(edit_pwd_perfil.getText().toString()));
                     }
@@ -184,8 +184,7 @@ public class PerfilFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_perfil, container, false);
     }

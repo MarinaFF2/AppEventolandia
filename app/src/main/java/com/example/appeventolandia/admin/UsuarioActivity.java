@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.appeventolandia.ConexionBBDD.ConexionBBDD;
+import com.example.appeventolandia.ConexionBBDD.Utilidades;
 import com.example.appeventolandia.InicioSesionActivity;
 import com.example.appeventolandia.MainAdminOrganizadorActivity;
 import com.example.appeventolandia.R;
@@ -26,6 +27,7 @@ import com.example.appeventolandia.cliente.MainClienteActivity;
 import com.example.appeventolandia.entidades.Usuario;
 import com.example.appeventolandia.fragmentsComun.WelcomeFragment;
 import com.example.appeventolandia.organizador.MainOrganizadorActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import es.dmoral.toasty.Toasty;
 
@@ -37,10 +39,12 @@ public class UsuarioActivity extends AppCompatActivity {
     private EditText edit_correo_usuario;
     private EditText edit_pwd_usuario;
     private Spinner spinner_rol_usuario;
+    private FloatingActionButton buttonDeleteUser;
 
-    private boolean salModificar;
+    private boolean salModificar; //variable para saber si hay que modificar o añadir
     private Usuario user; //usuario que se trata en la activity
-    private Usuario userSesion = null;
+    private Usuario userSesion;
+    private ConexionBBDD connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,23 @@ public class UsuarioActivity extends AppCompatActivity {
         addData();
         addEventSpinner();
         addButtonSave();
+        addButtonDelete();
+    }
+
+    private void addButtonDelete() {
+        buttonDeleteUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long result =  connection.deleteUser(user.getId());
+                if(result > 0) {
+                    Toasty.success(v.getContext(), "Delete the user", Toast.LENGTH_SHORT).show();
+                    //nos redirigimos al usuario
+                    redireccionamiento();
+                }else{
+                    Toasty.error(v.getContext(), "Error deleted the user", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void addEventSpinner() {
@@ -82,47 +103,43 @@ public class UsuarioActivity extends AppCompatActivity {
     }
     private void addButtonSave() {
         Button buttonSaveUsuarioActivity = (Button) findViewById(R.id.buttonSaveUsuarioActivity);
-
         buttonSaveUsuarioActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //comprobamos que todos los campos están seleccionados
-                if(edit_nombre_usuario.getText().toString()!=null && edit_correo_usuario.getText().toString()!=null){
-
-                    //hacemos la conexión con la BBDD
-                    ConexionBBDD connection = new ConexionBBDD(v.getContext(),"bd_events",null,2);
+                if(!edit_nombre_usuario.getText().toString().equals("") && !edit_correo_usuario.getText().toString().equals("")){
+                    //recogemos los campos comunes
+                    user.setNombreApellidos(edit_nombre_usuario.getText().toString());
+                    user.setCorreo(edit_correo_usuario.getText().toString());
 
                     if(salModificar){//si salModificar es true, significa que vamos a modificar un usuario
-                        user.setNombreApellidos(edit_nombre_usuario.getText().toString());
-                        user.setCorreo(edit_correo_usuario.getText().toString());
                         //comprobamos que quiera cambiar la comtraseña
-                        if(edit_pwd_usuario.getText().toString()!=null) {
+                        if( !edit_pwd_usuario.getText().toString().equals("")) {
                             //guardamos la nueva contraseña
                             user.setPwd(Usuario.codificaciónSHA512(edit_pwd_usuario.getText().toString()));
                         }
 
-                        connection.updateUser(user);
+                        int result = connection.updateUser(user);
+                        if(result > 0) {
+                            Toasty.success(v.getContext(), "Updated the user", Toast.LENGTH_SHORT).show();
+                            //nos redirigimos al usuario
+                            redireccionamiento();
+                        }else{
+                            Toasty.error(v.getContext(), "Error updated the user", Toast.LENGTH_SHORT).show();
+                        }
 
                     }else{//si salModificar es false, significa que vamos a añadir un usuario
-                        user.setNombreApellidos(edit_nombre_usuario.getText().toString());
-                        user.setCorreo(edit_correo_usuario.getText().toString());
                         user.setPwd(Usuario.codificaciónSHA512(edit_pwd_usuario.getText().toString()));
 
-                        connection.insertUser(user);
+                        long result =  connection.insertUser(user);
+                        if(result > 0) {
+                            Toasty.success(v.getContext(), "Updated the user", Toast.LENGTH_SHORT).show();
+                            //nos redirigimos al usuario
+                            redireccionamiento();
+                        }else{
+                            Toasty.error(v.getContext(), "Error updated the user", Toast.LENGTH_SHORT).show();
+                        }
                     }
-
-                    //nos redirigimos al usuario
-                    Intent intent = null;
-                    switch (userSesion.getIdRol()){
-                        case 2:// Bienvenida administrador
-                            intent = new Intent(UsuarioActivity.this, MainAdminActivity.class);
-                            break;
-                        case 3:// Bienvenida admin-organizador
-                            intent = new Intent(UsuarioActivity.this, MainAdminOrganizadorActivity.class);
-                            break;
-                    }
-                    intent.putExtra("userSesion", user); //guardamos el usuario para saber quien es
-                    startActivity(intent);
 
                 }else{//mostramos mensaje emergente
                     Toasty.info(v.getContext(), "Rellene todos los campos", Toast.LENGTH_SHORT).show();
@@ -130,9 +147,35 @@ public class UsuarioActivity extends AppCompatActivity {
             }
         });
     }
+    private void redireccionamiento(){
+        //nos redirigimos al usuario
+        Intent intent = null;
+        switch (userSesion.getIdRol()){
+            case 2:// Bienvenida administrador
+                intent = new Intent(UsuarioActivity.this, MainAdminActivity.class);
+                break;
+            case 3:// Bienvenida admin-organizador
+                intent = new Intent(UsuarioActivity.this, MainAdminOrganizadorActivity.class);
+                break;
+        }
+        intent.putExtra("userSesion", userSesion); //guardamos el usuario para saber quien es
+        startActivity(intent);
+
+    }
     private void addUserSession() {
-        if((Usuario) getIntent().getExtras().getSerializable("userSesion") != null) {
+        //hacemos la conexión con la BBDD
+        connection = new ConexionBBDD(this,"bd_events",null,2);
+        buttonDeleteUser = (FloatingActionButton) findViewById(R.id.buttonDeleteUser);
+
+        if((Usuario) getIntent().getExtras().getSerializable("userSesion") != null) { //modificar
             userSesion = (Usuario) getIntent().getExtras().getSerializable("userSesion");
+        }
+        if((Usuario) getIntent().getExtras().getSerializable("usuario") != null) { //modificar
+            user = (Usuario) getIntent().getExtras().getSerializable("usuario");
+            buttonDeleteUser.show();
+        }else{//añadir
+            user = null;
+            buttonDeleteUser.hide();
         }
     }
     private void addData() {
@@ -150,9 +193,8 @@ public class UsuarioActivity extends AppCompatActivity {
         // aplicamos el adpatador al spinner
         spinner_rol_usuario.setAdapter(adapter);
 
-        if((Usuario) getIntent().getExtras().getSerializable("usuario") != null){
+        if(user!= null){
             title_usuario_activity.setText(R.string.title_usuario_modificar);
-            user = (Usuario) getIntent().getExtras().getSerializable("usuario");
             text_value_id_usuario.setText(user.getId()+"");
             edit_nombre_usuario.setText(user.getNombreApellidos());
             edit_correo_usuario.setText(user.getCorreo());

@@ -21,12 +21,10 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
 
     private ArrayList<Evento> listEvents;
     private Context context;
-    private ConexionBBDD connection;
     private Evento e;
     private Usuario userSesion;
 
     public EventosCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context) {
-        connection = new ConexionBBDD(context,"bd_events",null,2);
         this.listEvents = listEvents;
         this.context = context;
         this.userSesion = userSesion;
@@ -54,6 +52,8 @@ public class EventosCardViewAdapter extends RecyclerView.Adapter<EventosCardView
         eventoViewHolder.cvEvento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //conseguimos el evento de la posición en la que estamos
+                e = listEvents.get(position);
                 //creamos el bundle para pasar el evento
                 Intent intent = new Intent(context, VisualizarEventoActivity.class);
                 intent.putExtra("eventSesion",e);

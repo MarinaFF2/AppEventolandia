@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="@string/hint_name_perfil" />
 
         <TextView
@@ -60,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:hint="@string/hint_email_perfil"/>
+            android:hint="@string/hint_email_perfil"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/campo_pwd_perfil"
@@ -76,7 +78,8 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:hint="@string/hint_pwd_perfil"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatCamaraPerfil"
@@ -96,6 +99,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:textColor="@color/text_Icons"
         android:text="@string/button_save_perfil"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

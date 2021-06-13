@@ -28,13 +28,14 @@
                 android:text="@string/title_inicioSesion"
                 android:textStyle="bold"
                 android:textSize="@dimen/sizeTitle"
-                android:gravity="center_horizontal"
+                android:textAlignment="center"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textView_correo_inicioSesion"
                 android:textSize="20dp"
+                android:textAlignment="center"
                 android:layout_marginTop="20dp"
                 />
             <EditText
@@ -44,12 +45,15 @@
                 android:hint="@string/editView_correo_inicioSesion"
                 android:layout_marginTop="20dp"
                 android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/textView_pwd_inicioSesion"
                 android:textSize="20dp"
+                android:textAlignment="center"
                 android:layout_marginTop="20dp"
                 />
             <EditText
@@ -59,6 +63,8 @@
                 android:hint="@string/editView_pwd_inicioSesion"
                 android:layout_marginTop="20dp"
                 android:inputType="textPassword"
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"
                 />
             <Button
                 android:id="@+id/button_inicioSesion"

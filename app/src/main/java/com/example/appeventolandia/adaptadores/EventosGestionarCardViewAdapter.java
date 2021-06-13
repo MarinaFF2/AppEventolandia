@@ -24,12 +24,14 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
     private ConexionBBDD connection;
     private Evento e;
     private Usuario userSesion;
+    private int size;
 
-    public EventosGestionarCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context) {
+    public EventosGestionarCardViewAdapter(ArrayList<Evento> listEvents, Usuario userSesion, Context context,int size) {
         connection = new ConexionBBDD(context,"bd_events",null,2);
         this.listEvents = listEvents;
         this.context = context;
         this.userSesion = userSesion;
+        this.size = size;
     }
 
     @NonNull
@@ -55,6 +57,8 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
         eventoViewHolder.cvEventoGestionar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //conseguimos el evento de la posición en la que estamos
+                e = listEvents.get(position);
                 //creamos el bundle para pasar el evento
                 Intent intent = new Intent(context, EventoActivity.class);
                 intent.putExtra("evento",e);
@@ -66,7 +70,7 @@ public class EventosGestionarCardViewAdapter extends RecyclerView.Adapter<Evento
 
     @Override
     public int getItemCount() {
-        return listEvents.size();
+        return size;
     }
 
     public static class EventoViewHolder extends RecyclerView.ViewHolder {

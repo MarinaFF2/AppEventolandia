@@ -45,6 +45,7 @@ public class VisualizarEventFragment extends Fragment {
     }
 
     private void addData(View view) {
+        //recogemos los eventos del cliente
         listEvents = connection.listEventsByCliente(userSesion.getId());
 
         //añado layout de como se va a ver

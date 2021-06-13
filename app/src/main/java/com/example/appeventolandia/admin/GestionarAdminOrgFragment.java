@@ -45,7 +45,6 @@ public class GestionarAdminOrgFragment extends Fragment {
         addListView(view);//añadimos el listView
         addNewUser(view); //boton añadir nuevo usuario
     }
-
     private void addNewUser(View view) {
         FloatingActionButton buttonNewUser = (FloatingActionButton) view.findViewById(R.id.buttonNewUser);
         buttonNewUser.setOnClickListener(new View.OnClickListener() {

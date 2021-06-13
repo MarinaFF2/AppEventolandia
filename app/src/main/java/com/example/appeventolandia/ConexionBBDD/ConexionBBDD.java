@@ -53,7 +53,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void deleteUser(int id){
+    public int deleteUser(int id){
         db = getWritableDatabase(); //Crear y / o abrir una base de datos que se utilizará para lectura y escritura.
         /*
             Método de conveniencia para insertar una fila en la base de datos.
@@ -68,8 +68,9 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             Toasty.error(context, "Error deleted the user", Toast.LENGTH_SHORT).show();
         }
         db.close();
+        return result;
     }
-    public void updateUser(Usuario user) {
+    public int updateUser(Usuario user) {
         db = getWritableDatabase(); //Crear y / o abrir una base de datos que se utilizará para lectura y escritura.
 
         String[] parametros={user.getId()+""};
@@ -88,8 +89,10 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         }
 
         db.close();
+        return result;
     }
-    public void insertUser(Usuario user) {
+    public Long insertUser(Usuario user) {
+        Long result = Long.valueOf(0);
         //antes de insertar comprobamos que el correo no se repìta
         if(existUserByCorreo(user.getCorreo())==null){
             db = this.getWritableDatabase();//declaro la bariable para poder interactuar con la bbdd
@@ -104,7 +107,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             //insertamos el usuario
             //devuelve un numero Long dependiento del resultado del insert
             //si idResult es igual 1 ha tenido exito
-            Long result = db.insert(Utilidades.TABLA_USER, Utilidades.CAMPO_ID_USER, values);
+            result = db.insert(Utilidades.TABLA_USER, Utilidades.CAMPO_ID_USER, values);
             if(result > 0) {
                 Toasty.success(context, "Inserted the user", Toast.LENGTH_SHORT).show();
             }else{
@@ -114,6 +117,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         }else{
             Toasty.info(context,"Ya existe un usuario con este correo ",Toast.LENGTH_SHORT).show();
         }
+        return result;
     }
     public Usuario existUserByCorreoPwd(String correo,String pwd){
         db = getReadableDatabase();
@@ -155,6 +159,8 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setIdRol(cursor.getInt(4));
             user.setFoto(cursor.getString(5));
             cursor.close();
+
+            Toasty.info(context,"Existed the user",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
             user = null;
@@ -181,6 +187,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             user.setIdRol(cursor.getInt(4));
             user.setFoto(cursor.getString(5));
             cursor.close();
+            //Toasty.info(context,"Existed the user",Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toasty.info(context,"Not existed the user",Toast.LENGTH_SHORT).show();
             user = null;
@@ -374,7 +381,8 @@ public class ConexionBBDD extends SQLiteOpenHelper {
 
         return listUsers;
     }
-    public void insertEvento(Evento event, Activity activity) {
+    public Long insertEvento(Evento event) {
+        Long result = Long.valueOf(0);
         //antes de insertar comprobamos que el correo no se repìta
         if(existEventByIDClienteIDOrganizadorFecha(event.getIdCliente(),event.getIdOrganizador(),event.getFecha()) == null) {
             db = getWritableDatabase();//declaro la bariable para poder interactuar con la bbdd
@@ -395,18 +403,19 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             //insertamos el usuario
             //devuelve un numero Long dependiento del resultado del insert
             //si idResult es igual 1 ha tenido exito
-            Long result = db.insert(Utilidades.TABLA_EVENT, Utilidades.CAMPO_ID_EVENT, values);
+            result = db.insert(Utilidades.TABLA_EVENT, Utilidades.CAMPO_ID_EVENT, values);
             if (result > 0) {
-                Toasty.success(activity, "Inserted the event", Toast.LENGTH_SHORT).show();
+                Toasty.success(context, "Inserted the event", Toast.LENGTH_SHORT).show();
             } else {
-                Toasty.error(activity, "Error inserted the event", Toast.LENGTH_SHORT).show();
+                Toasty.error(context, "Error inserted the event", Toast.LENGTH_SHORT).show();
             }
             db.close();
         }else{
             Toasty.info(context,"Ya existe un evento con este cliente, organizador en esa fecha ",Toast.LENGTH_SHORT).show();
         }
+        return result;
     }
-    public void deleteEvento(int id){
+    public int deleteEvento(int id){
         db = getWritableDatabase(); //Crear y / o abrir una base de datos que se utilizará para lectura y escritura.
         /*
             Método de conveniencia para insertar una fila en la base de datos.
@@ -422,13 +431,13 @@ public class ConexionBBDD extends SQLiteOpenHelper {
             Toasty.error(context, "Error deleted the event", Toast.LENGTH_SHORT).show();
         }
         db.close();
+        return result;
     }
-    public void updateEvento(Evento event) {
+    public int updateEvento(Evento event) {
         db = getWritableDatabase(); //Crear y / o abrir una base de datos que se utilizará para lectura y escritura.
 
         String[] parametros={event.getId()+""};
         ContentValues values=new ContentValues();
-        //values.put(Utilidades.CAMPO_ID_EVENT,event.getId());
         values.put(Utilidades.CAMPO_NOMBRE_EVENT,event.getNombre());
         values.put(Utilidades.CAMPO_DESCRIPCION_EVENT,event.getDescripcion());
         values.put(Utilidades.CAMPO_TIPO_EVENT,event.getTipoEvento());
@@ -439,7 +448,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         values.put(Utilidades.CAMPO_DURACION_EVENT,event.getDuracion());
         values.put(Utilidades.CAMPO_PRECIO_EVENT,event.getPrecio());
 
-        int result = db.update(Utilidades.TABLA_USER,values,Utilidades.CAMPO_ID_USER+"=?",parametros);
+        int result = db.update(Utilidades.TABLA_EVENT,values,Utilidades.CAMPO_ID_EVENT+"= ? ",parametros);
         if(result > 0) {
             Toasty.success(context, "Updated the event", Toast.LENGTH_SHORT).show();
         }else{
@@ -447,6 +456,7 @@ public class ConexionBBDD extends SQLiteOpenHelper {
         }
 
         db.close();
+        return result;
     }
     public Evento existEventByIDClienteIDOrganizadorFecha(int idCliente, int idOrganizador, String fecha) {
         Evento event = null;

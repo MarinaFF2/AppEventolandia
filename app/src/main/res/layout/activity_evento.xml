@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_nombreEvento"
+                android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center" />
 
             <TextView
@@ -63,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_descripcionEvento"
+                android:backgroundTint="@color/colorPrimary"
                 android:textAlignment="center" />
 
             <TextView
@@ -78,7 +80,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sizeCampos"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+
+                android:backgroundTint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/title_spinnerClienteEvento"
@@ -93,7 +97,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sizeCampos"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/title_spinnerOrganEvento"
@@ -108,22 +113,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/sizeCampos"
-                android:textAlignment="center" />
-
-            <TextView
-                android:id="@+id/title_editUbicacionEvento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/text_UbicacionEvento"
-                android:textSize="@dimen/sizeCampos"
-                android:textAlignment="center" />
-
-            <EditText
-                android:id="@+id/editUbicacionEvento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/edit_UbicacionEvento"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/title_editFechaEvento"
@@ -143,7 +134,8 @@
                 android:hint="@string/edit_fechaEvento"
                 android:inputType="date"
                 android:maxLines="1"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:backgroundTint="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/title_editDuracionEvento"
@@ -158,7 +150,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_DuracionEvento"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:inputType="number"
+                android:backgroundTint="@color/colorPrimary" />
 
             <TextView
                 android:id="@+id/title_editPrecioEvento"
@@ -173,9 +167,77 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_PrecioEvento"
+                android:textAlignment="center"
+                android:inputType="number"
+                android:backgroundTint="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/title_editUbicacionEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/text_UbicacionEvento"
+                android:textSize="@dimen/sizeCampos"
                 android:textAlignment="center" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                >
+
+                <EditText
+                    android:id="@+id/editUbicacionLatitudEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:inputType="numberSigned"
+                    android:hint="@string/edit_UbicacionLatitudEvento"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/editUbicacionLongitudEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/edit_UbicacionLongitudEvento"
+                    android:textAlignment="center"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:inputType="numberSigned"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/mapView_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                />
 
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonRefreshUbicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_weight="1"
+            android:contentDescription="icon delete"
+            android:src="@drawable/actualizar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutInterno" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonDeleteEvento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:contentDescription="icon delete"
+            android:src="@android:drawable/ic_input_delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.943"
+            app:layout_constraintStart_toEndOf="@+id/buttonRefreshUbicacion"
+            app:layout_constraintTop_toBottomOf="@+id/layoutInterno" />
 
         <Button
             android:id="@+id/buttonSaveEvento"
@@ -184,11 +246,9 @@
             android:background="@color/colorPrimary"
             android:text="@string/buttonSave"
             android:textColor="@color/text_Icons"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonRefreshUbicacion"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutInterno"
-            app:layout_constraintVertical_bias="1.0" />
-
+            app:layout_constraintTop_toBottomOf="@+id/buttonDeleteEvento" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

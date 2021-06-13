@@ -22,7 +22,7 @@ public class GestionarOrganizadorFragment extends Fragment {
     private Usuario userSesion;
 
     public GestionarOrganizadorFragment(Usuario userSesion){
-        this.userSesion = userSesion;
+                this.userSesion = userSesion;
     }
 
     @Override

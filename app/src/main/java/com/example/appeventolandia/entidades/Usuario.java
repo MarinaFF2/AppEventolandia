@@ -183,4 +183,6 @@ public class Usuario implements Serializable {
         return "Id=: " + id + "\n" +
                 "Nombre: " + nombreApellidos;
     }
+
+
 }

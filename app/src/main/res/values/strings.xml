@@ -44,7 +44,6 @@
     <string name="edit_DuracionEvento">Introduce duración</string>
     <string name="text_DuracionEvento">Duración</string>
     <string name="text_PrecioEvento">Precio</string>
-    <string name="edit_UbicacionEvento">Introduce ubicación</string>
     <string name="text_UbicacionEvento">Ubicación</string>
     <string name="buttonSave">Guardar</string>
     <string name="nav_cerrarSesion">Cerrar Sesión</string>
@@ -61,6 +60,9 @@
     <string name="text_rol_usuario">Rol:</string>
     <string name="title_evento_aniadir">Añadir Evento</string>
     <string name="title_evento_modificar">Modificar Evento</string>
+    <string name="edit_UbicacionLongitudEvento">Introduce la longitud de la ubicación</string>
+    <string name="edit_UbicacionLatitudEvento">Introduce la latitud de la ubicación</string>
+    <string name="descripcion_welcome">Es una aplicación que sirve para mantener informado al cliente de todo lo relacionado con el evento contratado.</string>
 
     <string-array name="tipoEvento_array">
         <item name="Bautizo">Bautizo</item>

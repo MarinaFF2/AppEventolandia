@@ -29,7 +29,6 @@
             android:text="@string/title_usuario_modificar"
             android:textAlignment="center"
             android:textSize="@dimen/sizeTitle2"/>
-
         <TextView
             android:id="@+id/text_id_usuario"
             android:layout_width="match_parent"
@@ -45,7 +44,8 @@
             android:layout_height="wrap_content"
             android:enabled="false"
             android:hint="@string/text_id_usuario"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/text_nombre_usuario"
@@ -61,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/text_nombre_usuario"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/text_correo_usuario"
@@ -78,7 +79,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/text_correo_usuario"
             android:inputType="textEmailAddress"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/text_pwd_usuario"
@@ -95,7 +97,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/text_pwd_usuario"
             android:inputType="textPassword"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/text_rol_usuario"
@@ -110,7 +113,17 @@
             android:id="@+id/spinner_rol_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:backgroundTint="@color/colorPrimary" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/buttonDeleteUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            android:contentDescription="icon delete"
+            android:src="@android:drawable/ic_input_delete"
+            />
     </LinearLayout>
 
     <Button

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class GestionarEventosFragment extends Fragment {
     private Usuario userSesion = null;
-    private ConexionBBDD connection;
     private ArrayList<Evento> listEvents;
     private RecyclerView rvListEvents;
 
@@ -34,17 +33,17 @@ public class GestionarEventosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //hacemos la conexión con la BBDD
-        connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
         //extendes Fragment, hay que heredarlo para que funcione
         rvListEvents = (RecyclerView) view.findViewById(R.id.rvListGestinarEvents);
 
         addUserSesion();//recogemos la userSesion
-        addNewEvent(view);
+        addNewEvent(view);//ponemos funcionalidad al boton de añadir evento
         addRecyclerView(view);//cargamos los eventos que organiza
     }
 
     private void addRecyclerView(View view) {
+        //hacemos la conexión con la BBDD
+        ConexionBBDD connection = new ConexionBBDD(view.getContext(),"bd_events",null,2);
         //recogemos los eventos que organiza
         listEvents = connection.listEventsByOrganizador(userSesion.getId());
 
@@ -54,24 +53,28 @@ public class GestionarEventosFragment extends Fragment {
         rvListEvents.setLayoutManager(gridLayoutManager);
 
         //añado adaptador
-        EventosGestionarCardViewAdapter adapter = new EventosGestionarCardViewAdapter(listEvents,userSesion,view.getContext());
+        EventosGestionarCardViewAdapter adapter = new EventosGestionarCardViewAdapter(listEvents,userSesion,view.getContext(),listEvents.size());
         rvListEvents.setAdapter(adapter);
     }
     private void addNewEvent(View view) {
+        //declaramos el boton
         FloatingActionButton buttonNewEvent = (FloatingActionButton) view.findViewById(R.id.buttonNewEvent);
+        //le añadimos funcionalidad
         buttonNewEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //nos redirigimos a la activity EventoActivity para añadir un evento
                 Intent intent = new Intent(view.getContext(), EventoActivity.class);
+                //recogemos las variables que vamos a necesitar
                 Evento event = null;
                 intent.putExtra("evento",event);
+                intent.putExtra("userSesion",userSesion);
                 startActivity(intent);
             }
         });
     }
     private void addUserSesion(){
         //recogemos la cookie del usuario
-        userSesion = null;
         Bundle data = this.getArguments();
         if(data != null){
             userSesion = (Usuario) data.getSerializable("userSesion");

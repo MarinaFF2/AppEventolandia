@@ -203,19 +203,20 @@ public class Evento  implements Serializable {
     }
     /***Metodos de la clase****/
     public static void insertEventoIniciales(Activity activity) {
+        String ubicacion ="38.97876, -3.92874";
         ArrayList<Evento> listEvent = new ArrayList<>();
-        listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,8,"ubicación","10/06/2021","5",150.50));
-        listEvent.add(new Evento("Bautizo Gomez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,8,"ubicación","15/06/2021","5",150.50));
-        listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",5,6,"ubicación","20/06/2021","5",150.50));
-        listEvent.add(new Evento("Bautizo Gomez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",5,8,"ubicación","25/06/2021","5",150.50));
-        listEvent.add(new Evento("Boda Vazquez","Es un boda en la tarde, va a haber banquete, cocteles y entrega de regalos","Boda",5,6,"ubicación","21/06/2021","5",150.50));
-        listEvent.add(new Evento("Boda Gomez","Es un Boda en la tarde, va a haber banquete, cocteles y entrega de regalos","Boda",1,6,"ubicación","25/06/2021","5",150.50));
-        listEvent.add(new Evento("Compromiso Vazquez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",5,8,"ubicación","10/06/2021","5",150.50));
-        listEvent.add(new Evento("Compromiso Gomez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",1,8,"ubicación","15/06/2021","5",150.50));
+        listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,8,ubicacion,"10/06/2021","5",150.50));
+        listEvent.add(new Evento("Bautizo Gomez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",1,8,ubicacion,"15/06/2021","5",150.50));
+        listEvent.add(new Evento("Bautizo Vazquez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",5,6,ubicacion,"20/06/2021","5",150.50));
+        listEvent.add(new Evento("Bautizo Gomez","Es un bautizo en la tarde, va a haber banquete, cocteles y entrega de regalos","Bautizo",5,8,ubicacion,"25/06/2021","5",150.50));
+        listEvent.add(new Evento("Boda Vazquez","Es un boda en la tarde, va a haber banquete, cocteles y entrega de regalos","Boda",5,6,ubicacion,"21/06/2021","5",150.50));
+        listEvent.add(new Evento("Boda Gomez","Es un Boda en la tarde, va a haber banquete, cocteles y entrega de regalos","Boda",1,6,ubicacion,"25/06/2021","5",150.50));
+        listEvent.add(new Evento("Compromiso Vazquez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",5,8,ubicacion,"10/06/2021","5",150.50));
+        listEvent.add(new Evento("Compromiso Gomez","Es un Compromiso en la tarde, va a haber banquete, cocteles y entrega de regalos","Compromiso",1,8,ubicacion,"15/06/2021","5",150.50));
 
         ConexionBBDD connection = new ConexionBBDD(activity,"bd_events",null,2);
         for (Evento evento:listEvent) {
-            connection.insertEvento(evento, activity);
+            connection.insertEvento(evento);
         }
     }
 

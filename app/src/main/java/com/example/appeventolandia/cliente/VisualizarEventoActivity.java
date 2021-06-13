@@ -2,11 +2,15 @@ package com.example.appeventolandia.cliente;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.os.Bundle;
 import android.widget.TextView;
 import com.example.appeventolandia.R;
 import com.example.appeventolandia.entidades.Evento;
 import com.example.appeventolandia.entidades.Usuario;
+import com.example.appeventolandia.fragmentsComun.MapsFragment;
 
 public class VisualizarEventoActivity extends AppCompatActivity {
     private Usuario userSesion;
@@ -41,7 +45,6 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         TextView txDescripcionShowEvento = (TextView) findViewById(R.id.txDescripcionShowEvento);
         TextView txTipoShowEvento = (TextView) findViewById(R.id.txTipoShowEvento);
         TextView txOrganShowEvento = (TextView) findViewById(R.id.txOrganShowEvento);
-        TextView txUbicacionShowEvento = (TextView) findViewById(R.id.txUbicacionShowEvento);
         TextView txFechaShowEvento = (TextView) findViewById(R.id.txFechaShowEvento);
         TextView txDuracionShowEvento = (TextView) findViewById(R.id.txDuracionShowEvento);
         TextView txPrecioShowEvento = (TextView) findViewById(R.id.txPrecioShowEvento);
@@ -50,10 +53,31 @@ public class VisualizarEventoActivity extends AppCompatActivity {
         txDescripcionShowEvento.setText(eventSesion.getDescripcion());
         txTipoShowEvento.setText(eventSesion.getTipoEvento());
         txOrganShowEvento.setText(eventSesion.getIdOrganizador()+"");
-        txUbicacionShowEvento.setText(eventSesion.getUbicacion());
         txFechaShowEvento.setText(eventSesion.getFecha());
         txDuracionShowEvento.setText(eventSesion.getDuracion()+"h");
         txPrecioShowEvento.setText(eventSesion.getPrecio()+"€");
+
+        String[] ubicacion = eventSesion.getUbicacion().split(",");
+        double latitud = Double.parseDouble(ubicacion[0]);
+        double longitud = Double.parseDouble(ubicacion[1]);
+        addMap(latitud,longitud,txNombreShowEvento);
+    }
+
+    private void addMap(double latitud, double longitud,TextView txNombreShowEvento) {
+        //mostramos el fragment
+        Fragment fragment = new MapsFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.mapView_fragment,fragment);
+        //pasamos el usuario de la sesion
+        try {
+            Bundle data = new Bundle();
+            data.putSerializable("nombreEvento", txNombreShowEvento.getText().toString());
+            data.putSerializable("latitud", latitud);
+            data.putSerializable("longitud", longitud);
+            fragment.setArguments(data);
+        } catch (NumberFormatException e){
+        }
+        fragmentTransaction.commit();
     }
     @Override
     public boolean onSupportNavigateUp() {
