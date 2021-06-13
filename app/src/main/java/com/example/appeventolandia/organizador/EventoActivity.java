@@ -284,9 +284,8 @@ public class EventoActivity extends AppCompatActivity {
     private void redireccionamiento(){
         //nos redirigimos al usuario
         Intent intent = null;
-        int rol = userSesion.getIdRol();
         switch (userSesion.getIdRol()){
-            case 2:// Bienvenida Organizador
+            case 1:// Bienvenida Organizador
                 intent = new Intent(EventoActivity.this, MainOrganizadorActivity.class);
                 break;
             case 3:// Bienvenida admin-organizador

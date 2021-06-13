@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/edit_PrecioEvento"
                 android:textAlignment="center"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:backgroundTint="@color/colorPrimary"/>
             <TextView
                 android:id="@+id/title_editUbicacionEvento"
